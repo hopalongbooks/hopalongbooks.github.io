@@ -145,21 +145,29 @@ def book_card(b):
 
 
 # ---------- FAQ (shown on home + book pages, marked up as FAQPage) ----------
+# General questions: taken from real Google "People also ask" / AI Overview results (checked 2026-10-08)
 FAQ = [
- ("What age are Hop Along color by number books for?",
-  "Ages 3 to 5 (preschool and kindergarten). Level 1 pictures use 3 colors with spaces about 1 inch wide; Level 5 pictures use 8 colors and every space is still about half an inch wide or bigger, so the same book grows with your child."),
- ("Can a child who can't read yet use the color key?",
-  "Yes. Every number in the key has a color swatch next to it, so a child can match by color. The color name is written out too (Red, Blue, Green), so a parent can say \"find the blue one\" and the child learns color words along the way."),
+ ("What age is color by number appropriate for?",
+  "Simple color by number pages can start around age 3, when many children are learning their first numbers and basic colors. Pages with only 2 or 3 colors and big spaces work best at first. By 4 and 5, most children can handle more colors and smaller spaces, often without help."),
+ ("Can 3 year olds do color by number?",
+  "Yes, if the page is simple. Look for pages that use only the numbers 1 to 3 and big shapes. Expect to help read the key at first (\"find all the 1s and color them red\"), and don't worry about coloring outside the lines; neatness isn't the goal at 3. Hop Along Level 1 pictures use only 3 colors and spaces about an inch wide for exactly this reason."),
+ ("Does my child need to know numbers and colors before starting?",
+  "No. A good key shows each number next to a swatch of the color and the color's name, so a child can match by color and learn the number and the word along the way. Color by number is one way to practice them, not a test."),
+ ("Is color by number bad for creativity?",
+  "It is a structured activity, so it is best mixed with free drawing rather than replacing it. Following the key builds number recognition, color names, focus and crayon control; free drawing builds imagination. Every Hop Along picture has a blank box on the back for your child to draw their own picture."),
+ ("Where can I find free printable color by number pages for 3 year olds?",
+  "You can print real pages from our books for free, each with its answer picture, on the Free pages section of this website (hopalongbooks.github.io/free.html)."),
+]
+# Product questions (book pages only)
+BOOK_FAQ = [
  ("Which crayons do I need?",
   "Any ordinary box of crayons or colored pencils. The books use everyday colors such as Red, Blue, Yellow, Green, Orange, Brown and Pink, and every key writes the color name out. If a page asks for Sky Blue, any light blue crayon works; for Tan, a light brown or peach crayon is fine."),
  ("Will markers bleed through the pages?",
   "Each picture is printed on one side of the page only. The back of every picture is an activity page, not another picture, so a marker can't ruin the next one. Crayons and colored pencils work best; if you use markers, slip a sheet of scrap paper behind the page."),
- ("How many pages and pictures are in each book?",
-  "102 pages: 45 pictures to color in 5 levels from easy to harder, an activity page behind each picture, and full answer pictures at the back. The books are 8.5 x 11 inch paperbacks."),
+ ("How many pages and pictures are in the book?",
+  "102 pages: 45 pictures to color in 5 levels from easy to harder (3 to 8 colors), an activity page behind each picture, and full answer pictures at the back. 8.5 x 11 inch paperback."),
  ("What is on the back of each picture?",
   "A short fact to read aloud, a strip to test colors before you start, a \"How did you feel?\" face to circle, and a box for your child to draw their own picture."),
- ("Can I try a page before I buy?",
-  "Yes. Free printable pages from each book, with their answer pictures, are on the Free pages section of this website."),
 ]
 def faq_html(items):
     return '<div class="faq">' + "".join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in items) + '</div>'
@@ -199,6 +207,7 @@ home_body = f"""
 
 <h2>For parents</h2>
 <div class="guides">
+<a class="guide" href="{SITE}/blog/can-a-3-year-old-do-color-by-number.html"><h3>Can a 3-year-old do color by number?</h3><p>Yes, with the right pages. What to expect and how to help.</p></a>
 <a class="guide" href="{SITE}/blog/how-to-choose-a-color-by-number-book-for-a-3-year-old.html"><h3>How to choose a color by number book for a 3-year-old</h3><p>Five things to check before you buy, and the mistake most books make.</p></a>
 <a class="guide" href="{SITE}/blog/why-color-names-matter-more-than-color-dots.html"><h3>Why color names beat color dots</h3><p>Dots are hard to match. Words aren't.</p></a>
 <a class="guide" href="{SITE}/blog/markers-vs-crayons-for-toddler-coloring-books.html"><h3>Markers or crayons?</h3><p>What works at 3, at 5, and how to stop bleed-through.</p></a>
@@ -216,7 +225,7 @@ for b in BOOKS:
           "bookFormat":"https://schema.org/Paperback","numberOfPages":102,"inLanguage":"en","typicalAgeRange":"3-5","genre":"Children's activity book, color by number",
           "image":f"{SITE}/img/{k}_cover.jpg","url":f"{SITE}/books/{b['slug']}.html","offers":{"@type":"Offer","url":b["amazon"],"priceCurrency":"USD","price":"10.99","availability":"https://schema.org/InStock"}}
     if b["isbn"]: ld["isbn"] = b["isbn"]
-    bfaq = [(f"What pictures are in {b['short']}?", f"45 pictures: {b['inside']}. They go from Level 1 (3 colors) to Level 5 (8 colors).")] + FAQ
+    bfaq = [(f"What pictures are in {b['short']}?", f"45 pictures: {b['inside']}. They go from Level 1 (3 colors) to Level 5 (8 colors).")] + BOOK_FAQ + FAQ[:3]
     body = f"""
 <div class="promise" style="margin-top:36px;grid-template-columns:1fr 1.4fr;align-items:start">
 <div><img src="{SITE}/img/{k}_cover.jpg" alt="{b['title']} cover" style="width:100%;border-radius:14px;border:1px solid var(--line)"></div>
@@ -257,6 +266,28 @@ for b in BOOKS:
 
 # ---------- blog ----------
 POSTS = [
+ ("can-a-3-year-old-do-color-by-number", "Can a 3-year-old do color by number?",
+  "Yes, with the right pages. What 3-year-olds can usually manage, what to expect, how to help, and when to wait a little longer.",
+  f"""
+<p>Short answer: yes, many 3-year-olds can do color by number, as long as the page is simple and an adult helps at first. Here is what that looks like in practice.</p>
+<h2>What a 3-year-old can usually manage</h2>
+<p>At 3, many children are learning their first numbers (1, 2, 3) and the basic colors like red, blue and yellow. That makes pages with <b>2 or 3 colors</b> and <b>only the numbers 1 to 3</b> a good fit. Pages with 8 colors and numbers up to 10 are usually too much for now.</p>
+<h2>What to expect</h2>
+<ul><li><b>They will need help reading the key.</b> Point to the number and say "find all the 1s and color them red." After a few pages, many children start doing it on their own.</li>
+<li><b>They will color outside the lines.</b> That's normal. Grip and control are still developing, and neatness isn't the goal at 3.</li>
+<li><b>Short sessions.</b> One picture, or even half of one, is a good sitting. Stop while it's still fun.</li></ul>
+<h2>How to pick pages that work</h2>
+<ul><li>Big spaces: about an inch wide for the first pages</li>
+<li>Few colors: 2 or 3 to start</li>
+<li>A key with the color <b>name written out</b> next to a swatch, not just a dot (<a href="{SITE}/blog/why-color-names-matter-more-than-color-dots.html">why that matters</a>)</li>
+<li>A picture they love: a truck, a cat, a dinosaur</li></ul>
+<h2>Is it bad for creativity?</h2>
+<p>Color by number is a structured activity: it practices numbers, color names, focus and crayon control. It doesn't replace free drawing, so keep blank paper around too. Mixing both is the easy answer.</p>
+<h2>When to wait a little</h2>
+<p>If your child gets upset by the rules ("but I want it purple!"), let them color it their way and try again in a few months. There is no rush, and every child moves at their own pace.</p>
+<h2>Try it free</h2>
+<p>Our Level 1 pages use only 3 colors and the numbers 1 to 3, with spaces about an inch wide. <a href="{SITE}/free.html">Print a free page</a> and see how your child does before you buy a book.</p>
+"""),
  ("how-to-choose-a-color-by-number-book-for-a-3-year-old", "How to choose a color by number book for a 3-year-old",
   "Five things to check before you buy a color by number book for a toddler or preschooler - and the one mistake most books make.",
   f"""
@@ -417,8 +448,8 @@ document.querySelectorAll("a.gated").forEach(function(a){{a.addEventListener("cl
 f.addEventListener("submit",function(e){{e.preventDefault();fetch(f.action,{{method:"POST",mode:"no-cors",body:new FormData(f)}}).finally(function(){{try{{localStorage.setItem(K,"1")}}catch(e){{}}open()}})}});}});</script>"""
 steps = ("<li>Enter your email</li><li>Download and print</li><li>Color, then check the answer</li>" if GATE else
          "<li>Download and print</li><li>Grab the crayons</li><li>Color, then check the answer</li>")
-page("Free Color by Number Pages to Print | Hop Along Books", "Print free color by number pages for ages 3-5, each with its answer picture. Real pages from Hop Along books.",
-     f"""<div style="background:var(--butter);border-radius:28px;padding:30px;margin-top:28px"><h1>Free pages to print</h1><p style="font-size:19px;margin:10px 0 0;max-width:36em">One real page from each book, plus its answer picture. Print on regular paper and see if the level is right for your child before you buy.</p>
+page("Free Printable Color by Number for 3 Year Olds (PDF) | Hop Along Books", "Free printable color by number pages for 3, 4 and 5 year olds. Big shapes, 3 to 4 colors, color names on the key, answer picture included. PDF, print at home.",
+     f"""<div style="background:var(--butter);border-radius:28px;padding:30px;margin-top:28px"><h1>Free printable color by number for 3 year olds</h1><p style="font-size:19px;margin:10px 0 0;max-width:36em">Real pages from our books for ages 3-5, each a PDF with its answer picture. Big shapes, only 3 or 4 colors, and the color names written on the key. Print on regular paper and see if the level is right for your child.</p>
 <ol class="steps">{steps}</ol></div>{signup}
 <h2>Pick a page</h2><div class="freebie">{''.join(fcard(f) for f in FREE)}</div>
 <p style="margin-top:30px;color:var(--mut)">Free for personal and classroom use. Please don't resell.</p>""", "free.html")
