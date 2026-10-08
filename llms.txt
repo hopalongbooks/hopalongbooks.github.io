@@ -1,0 +1,28 @@
+# Hop Along Books
+
+> Hop Along Books publishes color by number activity books for children ages 3 to 5, sold as paperbacks on Amazon. Every book has 45 pictures in 5 levels (3 to 8 colors), a color key with the number, a swatch and the color name written out, spaces measured for small hands (about 1 inch at Level 1, at least about half an inch at Level 5), and one picture per page with an activity page on the back.
+
+## Books
+- [Trucks, Trains, Rockets & Things That Go](https://hopalongbooks.github.io/books/trucks-trains-rockets.html): Color by Number for Kids Ages 3-5. 102 pages, 8.5 x 11 in, $10.99.
+- [Cute Animals Color by Number for Kids Ages 3-5](https://hopalongbooks.github.io/books/cute-animals.html): Pets, Farm, Zoo & Dinosaurs. 102 pages, 8.5 x 11 in, $10.99.
+- [Dinosaurs Color by Number for Kids Ages 3-5](https://hopalongbooks.github.io/books/dinosaurs.html): A Day in the Life of Silly Dinos. 102 pages, 8.5 x 11 in, $10.99.
+
+## Key facts
+- Age: 3-5 (preschool and kindergarten)
+- Colors: everyday colors such as Red, Blue, Yellow, Green, Orange, Brown and Pink, each named in the key; for Sky Blue any light blue crayon works
+- Printing: one picture per page, one-sided; markers won't ruin the next picture
+- Back of each picture: a read-aloud fact, a color test strip, a "How did you feel?" face, a drawing box
+- Answer pictures at the back of every book
+
+## Free resources
+- [Free printable pages](https://hopalongbooks.github.io/free.html): one real page from each book with its answer picture
+
+## Guides for parents
+- [How to choose a color by number book for a 3-year-old](https://hopalongbooks.github.io/blog/how-to-choose-a-color-by-number-book-for-a-3-year-old.html): Five things to check before you buy a color by number book for a toddler or preschooler - and the one mistake most books make.
+- [Why color names matter more than color dots](https://hopalongbooks.github.io/blog/why-color-names-matter-more-than-color-dots.html): Color by number keys that show only colored dots leave young children and color-blind parents guessing. Here's why written color names work better.
+- [Markers vs crayons for toddler coloring books](https://hopalongbooks.github.io/blog/markers-vs-crayons-for-toddler-coloring-books.html): Markers bleed through thin paper and ruin the next page. Here's what works best for ages 3-5 and how to choose a book that survives markers.
+- [Quiet activities for a 3-year-old on a plane or car ride](https://hopalongbooks.github.io/blog/quiet-activities-for-a-3-year-old-on-a-plane-or-car-ride.html): What to pack to keep a 3-year-old busy on a flight or long drive without a screen: coloring, stickers, small toys, and a few tricks that make them last longer.
+- [How to help a 3-year-old hold a crayon](https://hopalongbooks.github.io/blog/how-to-help-a-3-year-old-hold-a-crayon.html): Many 3-year-olds hold a crayon in their fist. That is a normal stage. Simple ways to build hand strength and a better grip through play, without forcing it.
+
+## Contact
+- [About](https://hopalongbooks.github.io/about.html) - purevibe88@gmail.com

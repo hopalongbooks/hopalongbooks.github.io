@@ -118,6 +118,7 @@ h1{font-size:clamp(34px,5.2vw,56px)}h2{font-size:clamp(26px,3.4vw,36px);margin:6
 .band{background:var(--butter);border-radius:28px;padding:30px;margin-top:64px;display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:center}
 .band h2{margin:0 0 8px}.band img{width:100%;border-radius:18px;background:#fff;padding:10px}
 @media(max-width:720px){.band{grid-template-columns:1fr}}
+.faq{max-width:760px}.faq details{background:#fff;border-radius:16px;padding:16px 20px;margin:0 0 10px}.faq summary{font-weight:800;cursor:pointer;font-size:17px}.faq details p{margin:10px 0 2px;color:#3a3958}
 .post{max-width:680px}.post p,.post li{font-size:18px}.post h2{font-size:26px;margin-top:40px}
 .newsletter{background:var(--butter);border-radius:24px;padding:28px;margin-top:70px}
 footer{margin-top:70px;padding:30px 0;color:var(--mut);font-size:15px;border-top:2px dashed var(--line)}
@@ -127,7 +128,7 @@ footer{margin-top:70px;padding:30px 0;color:var(--mut);font-size:15px;border-top
 
 def page(title, desc, body, path, jsonld=None, canonical=None):
     can = canonical or f"{SITE}/{path}"
-    ld = f'<script type="application/ld+json">{json.dumps(jsonld)}</script>' if jsonld else ""
+    ld = "".join(f'<script type="application/ld+json">{json.dumps(j)}</script>' for j in (jsonld if isinstance(jsonld, list) else [jsonld])) if jsonld else ""
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{can}">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:type" content="website"><meta property="og:image" content="{SITE}/img/hero_group.png"><meta property="og:url" content="{can}">
@@ -141,6 +142,29 @@ def page(title, desc, body, path, jsonld=None, canonical=None):
 def book_card(b):
     return f"""<a class="book" href="{SITE}/books/{b['slug']}.html"><img src="{SITE}/img/{b['key']}_cover.jpg" alt="{b['title']} cover">
 <h3>{b['short']}</h3><p>{b['sub']}</p><span class="tag">{b['status']}</span></a>"""
+
+
+# ---------- FAQ (shown on home + book pages, marked up as FAQPage) ----------
+FAQ = [
+ ("What age are Hop Along color by number books for?",
+  "Ages 3 to 5 (preschool and kindergarten). Level 1 pictures use 3 colors with spaces about 1 inch wide; Level 5 pictures use 8 colors and every space is still about half an inch wide or bigger, so the same book grows with your child."),
+ ("Can a child who can't read yet use the color key?",
+  "Yes. Every number in the key has a color swatch next to it, so a child can match by color. The color name is written out too (Red, Blue, Green), so a parent can say \"find the blue one\" and the child learns color words along the way."),
+ ("Which crayons do I need?",
+  "Any ordinary box of crayons or colored pencils. The books use everyday colors such as Red, Blue, Yellow, Green, Orange, Brown and Pink, and every key writes the color name out. If a page asks for Sky Blue, any light blue crayon works; for Tan, a light brown or peach crayon is fine."),
+ ("Will markers bleed through the pages?",
+  "Each picture is printed on one side of the page only. The back of every picture is an activity page, not another picture, so a marker can't ruin the next one. Crayons and colored pencils work best; if you use markers, slip a sheet of scrap paper behind the page."),
+ ("How many pages and pictures are in each book?",
+  "102 pages: 45 pictures to color in 5 levels from easy to harder, an activity page behind each picture, and full answer pictures at the back. The books are 8.5 x 11 inch paperbacks."),
+ ("What is on the back of each picture?",
+  "A short fact to read aloud, a strip to test colors before you start, a \"How did you feel?\" face to circle, and a box for your child to draw their own picture."),
+ ("Can I try a page before I buy?",
+  "Yes. Free printable pages from each book, with their answer pictures, are on the Free pages section of this website."),
+]
+def faq_html(items):
+    return '<div class="faq">' + "".join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in items) + '</div>'
+def faq_ld(items):
+    return {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in items]}
 
 # ---------- home ----------
 def topic_count(t): 
@@ -167,18 +191,23 @@ home_body = f"""
 
 <div class="band"><div><h2>Try a page tonight, free</h2><p>Print a real page from each book, with its answer picture. See if the level is right before you buy.</p><a class="btn" href="{SITE}/free.html">Print free pages</a></div><img src="{SITE}/img/free_cat.jpg" alt="Free printable page: a cat to color by number"></div>
 
-<h2>All books</h2>
+<h2 id="books">All books</h2>
 <div class="shelf">{''.join(book_card(b) for b in BOOKS)}</div>
+
+<h2>Questions parents ask</h2>
+{faq_html(FAQ)}
 
 <h2>For parents</h2>
 <div class="guides">
 <a class="guide" href="{SITE}/blog/how-to-choose-a-color-by-number-book-for-a-3-year-old.html"><h3>How to choose a color by number book for a 3-year-old</h3><p>Five things to check before you buy, and the mistake most books make.</p></a>
 <a class="guide" href="{SITE}/blog/why-color-names-matter-more-than-color-dots.html"><h3>Why color names beat color dots</h3><p>Dots are hard to match. Words aren't.</p></a>
 <a class="guide" href="{SITE}/blog/markers-vs-crayons-for-toddler-coloring-books.html"><h3>Markers or crayons?</h3><p>What works at 3, at 5, and how to stop bleed-through.</p></a>
+<a class="guide" href="{SITE}/blog/quiet-activities-for-a-3-year-old-on-a-plane-or-car-ride.html"><h3>Quiet activities for a plane or car ride</h3><p>What to pack for a 3-year-old, and what to leave at home.</p></a>
+<a class="guide" href="{SITE}/blog/how-to-help-a-3-year-old-hold-a-crayon.html"><h3>Helping a 3-year-old hold a crayon</h3><p>The fist grip is normal. Small things that help it grow.</p></a>
 </div>
 """
 page("Hop Along Books - Color by Number for Kids Ages 3-5", "Color by number books made for ages 3-5: big shapes, color names on every key, one picture per page, a fun activity page behind each. Trucks, animals and dinosaurs. On Amazon.", home_body, "index.html",
-     jsonld={"@context":"https://schema.org","@type":"Organization","name":PUB,"url":SITE+"/","description":"Publisher of color by number books for children ages 3-5."}, canonical=SITE+"/")
+     jsonld=[{"@context":"https://schema.org","@type":"Organization","name":PUB,"url":SITE+"/","email":"purevibe88@gmail.com","description":"Publisher of color by number books for children ages 3-5."}, faq_ld(FAQ)], canonical=SITE+"/")
 
 # ---------- book pages ----------
 for b in BOOKS:
@@ -187,6 +216,7 @@ for b in BOOKS:
           "bookFormat":"https://schema.org/Paperback","numberOfPages":102,"inLanguage":"en","typicalAgeRange":"3-5","genre":"Children's activity book, color by number",
           "image":f"{SITE}/img/{k}_cover.jpg","url":f"{SITE}/books/{b['slug']}.html","offers":{"@type":"Offer","url":b["amazon"],"priceCurrency":"USD","price":"10.99","availability":"https://schema.org/InStock"}}
     if b["isbn"]: ld["isbn"] = b["isbn"]
+    bfaq = [(f"What pictures are in {b['short']}?", f"45 pictures: {b['inside']}. They go from Level 1 (3 colors) to Level 5 (8 colors).")] + FAQ
     body = f"""
 <div class="promise" style="margin-top:36px;grid-template-columns:1fr 1.4fr;align-items:start">
 <div><img src="{SITE}/img/{k}_cover.jpg" alt="{b['title']} cover" style="width:100%;border-radius:14px;border:1px solid var(--line)"></div>
@@ -199,7 +229,7 @@ for b in BOOKS:
 <tr><th>Pictures</th><td>45, in 5 levels from easy to harder</td></tr>
 <tr><th>Colors per picture</th><td>Level 1: 3 &middot; Level 2: 4 &middot; Level 3: 5 &middot; Level 4: 6 &middot; Level 5: 8</td></tr>
 <tr><th>Smallest coloring space</th><td>Level 1 about 1 inch (25 mm) wide; Level 5 about half an inch (12 mm) wide. Every page is measured.</td></tr>
-<tr><th>Color key</th><td>Number + color swatch + color name written out. Everyday colors only (Red, Blue, Yellow, Green, Orange, Brown, Violet, Gray, Pink, Sky Blue = any light blue).</td></tr>
+<tr><th>Color key</th><td>Number + color swatch + color name written out. Everyday colors such as Red, Blue, Yellow, Green, Orange, Brown and Pink. Sky Blue = any light blue crayon.</td></tr>
 <tr><th>Printing</th><td>One picture per page, printed on one side. Behind each picture: {b['fact']}, a color test strip, a "How did you feel?" face to circle and a box to draw your own.</td></tr>
 <tr><th>Pages / size</th><td>102 pages &middot; 8.5 x 11 in &middot; paperback, matte cover</td></tr>
 <tr><th>What's inside</th><td>{b['inside']}; answer pictures at the back</td></tr>
@@ -218,10 +248,12 @@ for b in BOOKS:
 <figure><img src="{SITE}/img/{k}_B2_back.jpg" alt="The activity page behind each picture"><figcaption>Flip the page: fact, color test, feelings</figcaption></figure>
 <figure><img src="{SITE}/img/{k}_B3_key.jpg" alt="Color key with color names"><figcaption>A color key kids can read</figcaption></figure>
 </div>
+<h2>Questions parents ask</h2>
+{faq_html(bfaq)}
 <h2>More from Hop Along Books</h2>
 <div class="shelf">{''.join(book_card(o) for o in BOOKS if o['key']!=k)}</div>
 """
-    page(f"{b['title']} | Hop Along Books", f"{b['sub']}. 45 pictures in 5 levels for ages 3-5, color names on every key, one picture per page. 102 pages, 8.5 x 11 in.", body, f"books/{b['slug']}.html", jsonld=ld)
+    page(f"{b['title']} | Hop Along Books", f"{b['sub']}. 45 pictures in 5 levels for ages 3-5, color names on every key, one picture per page. 102 pages, 8.5 x 11 in.", body, f"books/{b['slug']}.html", jsonld=[ld, faq_ld(bfaq)])
 
 # ---------- blog ----------
 POSTS = [
@@ -274,6 +306,48 @@ POSTS = [
 <h2>What to look for in a book</h2>
 <ul><li>One picture per page, one-sided printing</li><li>Something useful on the back of each picture (so the page isn't wasted)</li><li>Thick, clear outlines that are easy to see even if a marker spreads a little</li></ul>
 <p><a href="{SITE}/">Hop Along</a> books are printed one picture per page; the back of each picture is an activity page with a fact, a color test strip and a drawing box. <a href="{SITE}/#books">See the books</a>.</p>
+"""),
+ ("quiet-activities-for-a-3-year-old-on-a-plane-or-car-ride", "Quiet activities for a 3-year-old on a plane or car ride",
+  "What to pack to keep a 3-year-old busy on a flight or long drive without a screen: coloring, stickers, small toys, and a few tricks that make them last longer.",
+  f"""
+<p>A long flight or drive with a 3-year-old goes better with a small bag of things to do. Here is what tends to work, and a few tricks that make each activity last longer.</p>
+<h2>Pack several small things, not one big thing</h2>
+<p>Attention spans at 3 are short. Five activities that each hold attention for ten minutes beat one that is supposed to last an hour. Bring them out one at a time and put each away before the next comes out.</p>
+<h2>Coloring that works on a tray table</h2>
+<ul><li><b>Crayons, not markers.</b> No caps to lose, no stains on the seat, no bleed-through.</li>
+<li><b>Fewer crayons.</b> A small pouch with the 6 to 10 colors the page needs is easier than a full box that spills.</li>
+<li><b>Big, simple pictures.</b> Bumpy roads and small tray tables make fine coloring hard. Pages with big spaces and only a few colors are easier to finish on the move.</li>
+<li><b>Tear out a page or two before you leave</b> so a whole book isn't sliding around.</li></ul>
+<h2>Other quiet favorites</h2>
+<ul><li><b>Sticker books</b> and reusable sticker scenes</li>
+<li><b>A few small, new toys</b> wrapped in paper, opened one at a time</li>
+<li><b>Picture books</b> to read together, or look-and-find books</li>
+<li><b>Snacks in a container with several small compartments</b>, which doubles as an activity</li></ul>
+<h2>Games that need nothing</h2>
+<p>I spy with colors ("I spy something blue"), counting cars or clouds, and guessing animal sounds. These are good for the last half hour, when everything in the bag has been used.</p>
+<h2>Keep one thing in reserve</h2>
+<p>Save one new activity for the hardest moment: the delay, the descent, or the last stretch of the drive.</p>
+<p><a href="{SITE}/">Hop Along</a> books are made for this: big spaces, 3 to 8 colors, one picture per page. <a href="{SITE}/free.html">Print a free page</a> to try before your trip.</p>
+"""),
+ ("how-to-help-a-3-year-old-hold-a-crayon", "How to help a 3-year-old hold a crayon",
+  "Many 3-year-olds hold a crayon in their fist. That is a normal stage. Simple ways to build hand strength and a better grip through play, without forcing it.",
+  f"""
+<p>If your 3-year-old grabs a crayon in their whole fist, that is very common. Grips change gradually as small hand muscles get stronger, and many children are still working toward holding a crayon between thumb and fingers well into the preschool years.</p>
+<h2>Don't force the grip</h2>
+<p>Correcting the grip every few seconds makes coloring a chore. A child who enjoys coloring will color more, and practice is what changes the grip. Show, don't push.</p>
+<h2>Use shorter, thicker crayons</h2>
+<p>Short pieces of crayon are hard to hold in a fist, so small hands naturally switch to the fingertips. Breaking a few crayons in half is an easy trick. Chunky or triangular crayons are also easier to grip.</p>
+<h2>Give them big spaces first</h2>
+<p>When the space to color is tiny, a child grips harder and gets frustrated. Big shapes let them make big arm movements and still stay mostly inside the lines. That success keeps them coming back.</p>
+<h2>Build hand strength through play</h2>
+<ul><li>Play dough: rolling, squeezing and pinching</li>
+<li>Peeling and placing stickers</li>
+<li>Tearing paper into small pieces</li>
+<li>Picking up small objects with fingers or tongs</li>
+<li>Coloring on a vertical surface, like paper taped to a wall or an easel</li></ul>
+<h2>When to ask for advice</h2>
+<p>Every child moves at their own pace. If you are worried about your child's hand use or fine motor skills, talk to your pediatrician or your child's teacher.</p>
+<p><a href="{SITE}/">Hop Along</a> books start with Level 1 pictures that have only 3 colors and spaces about an inch wide. <a href="{SITE}/free.html">Try a free page</a>.</p>
 """),
 ]
 idx = "<h1>Guides for parents</h1><p class='lead'>Short, practical guides on choosing and using coloring books with 3-5 year olds.</p><ul>"
@@ -352,6 +426,28 @@ page("Free Color by Number Pages to Print | Hop Along Books", "Print free color 
 # sitemap + robots
 urls = [SITE+"/", SITE+"/about.html", SITE+"/blog/", SITE+"/free.html"] + [f"{SITE}/topics/{t['slug']}.html" for t in TOPICS] + [f"{SITE}/ages/{g['slug']}.html" for g in AGES if g["live"]] + [f"{SITE}/books/{b['slug']}.html" for b in BOOKS] + [f"{SITE}/blog/{p[0]}.html" for p in POSTS]
 open(os.path.join(ROOT,"sitemap.xml"),"w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{u}</loc><lastmod>{TODAY}</lastmod></url>" for u in urls)+"</urlset>")
+llms = f"""# Hop Along Books
+
+> Hop Along Books publishes color by number activity books for children ages 3 to 5, sold as paperbacks on Amazon. Every book has 45 pictures in 5 levels (3 to 8 colors), a color key with the number, a swatch and the color name written out, spaces measured for small hands (about 1 inch at Level 1, at least about half an inch at Level 5), and one picture per page with an activity page on the back.
+
+## Books
+""" + "".join(f"- [{b['title']}]({SITE}/books/{b['slug']}.html): {b['sub']}. 102 pages, 8.5 x 11 in, $10.99." + "\n" for b in BOOKS) + f"""
+## Key facts
+- Age: 3-5 (preschool and kindergarten)
+- Colors: everyday colors such as Red, Blue, Yellow, Green, Orange, Brown and Pink, each named in the key; for Sky Blue any light blue crayon works
+- Printing: one picture per page, one-sided; markers won't ruin the next picture
+- Back of each picture: a read-aloud fact, a color test strip, a "How did you feel?" face, a drawing box
+- Answer pictures at the back of every book
+
+## Free resources
+- [Free printable pages]({SITE}/free.html): one real page from each book with its answer picture
+
+## Guides for parents
+""" + "".join(f"- [{t}]({SITE}/blog/{sl}.html): {d}" + "\n" for sl,t,d,_ in POSTS) + f"""
+## Contact
+- [About]({SITE}/about.html) - purevibe88@gmail.com
+"""
+open(os.path.join(ROOT,"llms.txt"),"w").write(llms)
 open(os.path.join(ROOT,"robots.txt"),"w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 open(os.path.join(ROOT,".nojekyll"),"w").write("")
 print("built", len(urls), "pages")
