@@ -35,9 +35,9 @@ BOOKS = [
 ]
 
 TOPICS = [
- dict(slug="things-that-go", name="Things That Go", blurb="Trucks, trains, diggers, boats and rockets.", color="#7FD3F0", img="hero_truck.jpg"),
- dict(slug="animals", name="Animals", blurb="Pets, farm friends, zoo animals and sea creatures.", color="#5BC98A", img="hero_cat.jpg"),
- dict(slug="dinosaurs", name="Dinosaurs", blurb="Silly dinos brushing teeth, baking cakes and driving trucks.", color="#C7B6F2", img="hero_trex.jpg"),
+ dict(slug="things-that-go", name="Things That Go", blurb="Trucks, trains, diggers, boats and rockets.", color="#C9DCEB", img="hero_truck.jpg", numbered="free_fire-truck.jpg"),
+ dict(slug="animals", name="Animals", blurb="Pets, farm friends, zoo animals and sea creatures.", color="#D6E3CF", img="hero_cat.jpg", numbered="free_cat.jpg"),
+ dict(slug="dinosaurs", name="Dinosaurs", blurb="Silly dinos brushing teeth, baking cakes and driving trucks.", color="#EED7D3", img="hero_trex.jpg", numbered="free_trex-apple.jpg"),
 ]
 SOON = ["Ocean", "Space", "Holidays", "Bugs & Garden"]
 AGES = [dict(slug="3-5", name="Ages 3-5", blurb="Big shapes, 3 to 8 colors, color names on every key.", live=True),
@@ -46,8 +46,7 @@ FREE = [dict(slug="trex-apple", name="T-Rex Eats an Apple", book="dinosaurs", le
         dict(slug="cat", name="Cat", book="cute-animals", level="Level 1, 3 colors"),
         dict(slug="fire-truck", name="Fire Truck", book="trucks-trains-rockets", level="Level 2, 4 colors")]
 
-CSS = """
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+CSS = r"""
 :root{--paper:#FFF8EC;--ink:#2B2A4C;--mut:#6B6A85;--butter:#FFD166;--sky:#7FD3F0;--coral:#FF7B6B;--leaf:#5BC98A;--line:#EADFC8}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-size:17px}
@@ -122,25 +121,217 @@ h1{font-size:clamp(34px,5.2vw,56px)}h2{font-size:clamp(26px,3.4vw,36px);margin:6
 .post{max-width:680px}.post p,.post li{font-size:18px}.post h2{font-size:26px;margin-top:40px}
 .newsletter{background:var(--butter);border-radius:24px;padding:28px;margin-top:70px}
 footer{margin-top:70px;padding:30px 0;color:var(--mut);font-size:15px;border-top:2px dashed var(--line)}
-@media(max-width:720px){.hero .wrap{grid-template-columns:1fr;padding-bottom:40px}.hero img{transform:none}.promise,.promise:nth-child(even){grid-template-columns:1fr;direction:ltr}.three{grid-template-columns:1fr 1fr}nav a{margin-left:10px;font-size:14px;white-space:nowrap}nav a[href$="about.html"],nav a[href$="/blog/"]{display:none}.topics{grid-template-columns:1fr 1fr;gap:12px}.topic{padding:10px 10px 14px;border-radius:18px}.topic p{display:none}.topic h3{font-size:17px;margin-top:8px}header .wrap{height:60px}.brand{font-size:19px;white-space:nowrap}.brand i{width:26px;height:26px}}
+@media(max-width:720px){.hero .wrap{grid-template-columns:1fr;padding-bottom:40px}.hero img{transform:none}.promise,.promise:nth-child(even){grid-template-columns:1fr;direction:ltr}.three{grid-template-columns:1fr 1fr}nav a{margin-left:10px;font-size:14px;white-space:nowrap}nav a[href$="about.html"],nav a[href*="/blog/"]{display:none}.topics{grid-template-columns:1fr 1fr;gap:12px}.topic{padding:10px 10px 14px;border-radius:18px}.topic p{display:none}.topic h3{font-size:17px;margin-top:8px}header .wrap{height:60px}.brand{font-size:19px;white-space:nowrap}.brand i{width:26px;height:26px}}
 @media(prefers-reduced-motion:reduce){.book img{transition:none}html{scroll-behavior:auto}}
+
+.cbn{background:#fff;border-radius:28px;padding:16px;box-shadow:0 10px 0 rgba(43,42,76,.12);min-width:0}
+.cbn-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.cbn-tabs button{font:inherit;font-weight:800;font-size:14px;border:2px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:6px 12px;cursor:pointer}
+.cbn-tabs button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.cbn-meta{font-size:13px;color:var(--mut);font-weight:700;margin:0 2px 6px}
+.cbn-art{position:relative;background:#fff;border:2px solid var(--line);border-radius:18px;overflow:hidden}
+.cbn-art svg{display:block;width:100%;height:auto;touch-action:manipulation}
+.cbn-art .s{cursor:pointer;transition:fill .25s}
+.cbn-art .s:hover{stroke-width:2}
+.cbn-art .nums text{font-family:Fredoka,Nunito,sans-serif;font-weight:600;font-size:7px;fill:#2B2A4C;text-anchor:middle;dominant-baseline:central;pointer-events:none;transition:opacity .2s}
+.cbn-art .s.pop{animation:pop .35s ease}
+.cbn-art .s.no{animation:no .3s ease}
+@keyframes pop{50%{transform:scale(1.04)}}@keyframes no{25%{transform:translateX(-1.5px)}75%{transform:translateX(1.5px)}}
+.cbn-art .s{transform-box:fill-box;transform-origin:center}
+.cbn-key{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cbn-key button{display:flex;align-items:center;gap:8px;font:inherit;font-weight:800;font-size:15px;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:14px;padding:6px 12px 6px 6px;cursor:pointer}
+.cbn-key button i{width:28px;height:28px;border-radius:8px;border:1.5px solid #1b1b1b;display:grid;place-items:center;font-style:normal;font-family:Fredoka,sans-serif;font-size:15px}
+.cbn-key button[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 3px var(--butter)}
+.cbn-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;min-height:34px}
+.cbn-msg{font-size:15px;font-weight:700;color:var(--ink);min-width:0}
+.cbn-tools{display:flex;gap:6px;flex:none}
+.cbn-tools button{font:inherit;font-size:13px;font-weight:800;color:var(--mut);background:none;border:0;cursor:pointer;text-decoration:underline;padding:4px}
+.cbn-done{position:absolute;inset:auto 10px 10px 10px;background:var(--ink);color:#fff;border-radius:16px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;transform:translateY(130%);transition:transform .35s cubic-bezier(.3,1.4,.6,1)}
+.cbn-done.on{transform:none}
+.cbn-done b{font-family:Fredoka,sans-serif;font-weight:600;font-size:17px}
+.cbn-done a{color:var(--ink);background:var(--butter);text-decoration:none;font-weight:800;border-radius:999px;padding:7px 14px;font-size:14px}
+.cbn button:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.cbn-art .s,.cbn-done{transition:none}.cbn-art .s.pop,.cbn-art .s.no{animation:none}}
+
+.quiz{background:#fff;border-radius:28px;padding:22px;box-shadow:0 10px 0 rgba(43,42,76,.12);min-width:0}
+.quiz .dots{display:flex;gap:6px;margin-bottom:14px}.quiz .dots i{height:6px;flex:1;border-radius:6px;background:var(--line)}.quiz .dots i.on{background:var(--coral)}
+.quiz .q{font-family:Fredoka,sans-serif;font-weight:600;font-size:22px;line-height:1.2;margin:0 0 14px}
+.quiz .opts{display:grid;gap:10px}
+.quiz .opts button{display:flex;align-items:center;gap:12px;text-align:left;font:inherit;font-weight:700;font-size:16px;background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:10px 14px;cursor:pointer;color:var(--ink);transition:transform .12s,border-color .12s}
+.quiz .opts button:hover{border-color:var(--ink);transform:translateX(3px)}
+.quiz .opts img{width:58px;height:58px;object-fit:contain;background:#fff;border-radius:10px;flex:none}
+.quiz .opts small{display:block;font-weight:600;color:var(--mut);font-size:13px}
+.quiz .back{font:inherit;font-size:13px;font-weight:800;color:var(--mut);background:none;border:0;cursor:pointer;margin-top:12px;text-decoration:underline;padding:0}
+.res{display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:start}
+.res img{width:100%;border-radius:10px;border:1px solid var(--line)}
+.res h3{font-size:22px}.res p{font-size:15px;margin:6px 0 12px;color:#3a3958}
+.res .why{grid-column:1/-1;background:var(--paper);border-radius:14px;padding:12px 14px;font-size:15px;margin:0}
+.res .acts{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap}
+.res .btn{padding:11px 18px;font-size:15px}
+.quiz button:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.ladder{background:#fff;border-radius:28px;padding:22px;display:grid;grid-template-columns:1fr 1.1fr;gap:26px;align-items:center}
+.ladder .seg{display:inline-flex;background:var(--paper);border-radius:999px;padding:4px;gap:4px;flex-wrap:wrap}
+.ladder .seg button{font:inherit;font-weight:800;font-size:14px;border:0;background:none;border-radius:999px;padding:7px 14px;cursor:pointer;color:var(--ink)}
+.ladder .seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.ladder .lv{display:flex;gap:8px;margin:14px 0}
+.ladder .lv button{flex:1;font:inherit;font-weight:800;border:2px solid var(--line);background:#fff;border-radius:14px;padding:10px 6px;cursor:pointer;color:var(--ink)}
+.ladder .lv button[aria-pressed=true]{border-color:var(--coral);background:#FFF1EE}
+.ladder .stat{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ladder .stat div{background:var(--paper);border-radius:14px;padding:10px 14px}
+.ladder .stat b{display:block;font-family:Fredoka,sans-serif;font-size:28px;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.ladder .stat span{font-size:13px;color:var(--mut);font-weight:700}
+.ladder .pic{position:relative;aspect-ratio:1;background:var(--paper);border-radius:20px;overflow:hidden}
+.ladder .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .3s,transform .3s}
+.ladder .pic img.out{opacity:0;transform:scale(.96)}
+.tryit{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center}
+.tryit .cbn{max-width:460px}
+@media(max-width:720px){.ladder,.tryit{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ladder .pic img,.quiz .opts button{transition:none}}
+
+/* layout: big-scene hero (book on the table + character stickers), moving character strip, living page, sticky reasons, shelf */
+:root{--paper:#F4F1EC;--ink:#1F2A44;--mut:#646B7A;--line:#E2DCD2;--card:#fff;
+ --hero:#DCE6EE;--hero-ink:#1F2A44;--a1:#C9DCEB;--a2:#D6E3CF;--a3:#F2D9A0;--a4:#EED7D3;--cta:#2E46C9;--cta-ink:#fff;--strip:#2E46C9;--strip-ink:#fff;
+ --disp:'Fraunces',Georgia,serif;--body:'Figtree',system-ui,sans-serif;--dw:500;--track:-1px;--r:24px;
+ --butter:var(--a3);--coral:var(--cta);--sky:var(--a1);--leaf:var(--a2);color-scheme:light}
+html,body{overflow-x:clip}body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px}
+h1,h2,h3,.brand{font-family:var(--disp);font-weight:var(--dw);letter-spacing:var(--track);text-wrap:balance}
+.home h2{font-size:clamp(30px,4.4vw,52px);margin:0 0 18px}h3{font-weight:var(--dw)}
+.brand i{background:var(--a3);border:2.5px solid var(--ink)}
+main.home{max-width:none;padding:0}
+.in{max-width:1120px;margin:0 auto;padding-inline:20px}
+.home section{padding-block:72px}
+.btn{background:var(--cta);color:var(--cta-ink);border-radius:999px;transition:transform .15s}.btn:hover{transform:translateY(-2px) rotate(-1deg)}
+.btn.soft{background:var(--card);color:var(--ink);border:2px solid var(--ink)}
+.topbar{background:var(--strip);color:var(--strip-ink);text-align:center;font-weight:700;font-size:14px;padding:8px 16px}.topbar a{color:inherit}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px)}
+.sticker{filter:drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 8px 10px rgba(0,0,0,.18))}
+/* HERO */
+.hero{background:var(--hero);color:var(--hero-ink);position:relative;overflow:hidden;padding-block:56px 90px}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(color-mix(in srgb,var(--hero-ink) 14%,transparent) 1.5px,transparent 1.6px);background-size:22px 22px;opacity:.6;pointer-events:none}
+.hero .in{display:grid;grid-template-columns:1.05fr 1fr;gap:30px;align-items:center;position:relative}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font-weight:800;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.hero h1{font-size:clamp(42px,6.4vw,84px);line-height:.98;margin:18px 0 18px}
+.hero p.lede{font-size:19px;max-width:30em;margin:0 0 26px;opacity:.92}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.proof{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px;padding:0;list-style:none}
+.proof li{background:color-mix(in srgb,var(--card) 18%,transparent);border:1.5px solid color-mix(in srgb,var(--hero-ink) 35%,transparent);border-radius:999px;padding:5px 12px;font-weight:700;font-size:14px}
+.scene{position:relative;aspect-ratio:1/1;max-width:560px;width:100%;justify-self:center}
+.table{position:absolute;left:-8%;right:-8%;bottom:4%;height:30%;background:color-mix(in srgb,var(--ink) 10%,transparent);border-radius:50%;filter:blur(18px)}
+.scene .bk3{position:absolute;width:44%;height:auto;aspect-ratio:440/569;object-fit:cover;border-radius:4px 10px 10px 4px;box-shadow:7px 0 0 #e9e4dc,14px 18px 0 rgba(0,0,0,.16);transform-origin:50% 100%}
+.scene .bk3.b1{left:30%;top:18%;transform:rotate(4deg);z-index:3}.scene .bk3.b2{left:10%;top:22%;transform:rotate(-9deg);z-index:2}.scene .bk3.b3{left:50%;top:24%;transform:rotate(14deg);z-index:1}
+.scene:hover .bk3.b2{transform:rotate(-14deg) translateX(-12px)}.scene:hover .bk3.b3{transform:rotate(19deg) translateX(12px)}.scene .bk3{transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.crayon{position:absolute;height:14px;width:34%;border-radius:3px 0 0 3px;background:var(--c);z-index:4;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)}
+.crayon::before{content:"";position:absolute;right:-16px;top:0;border-left:16px solid var(--c);border-top:7px solid transparent;border-bottom:7px solid transparent}
+.crayon::after{content:"";position:absolute;left:18%;width:30%;top:0;bottom:0;border-left:2px solid rgba(255,255,255,.5);border-right:2px solid rgba(255,255,255,.5)}
+.st{position:absolute;z-index:5;animation:bob 5s ease-in-out infinite;will-change:transform}
+.st img{display:block;width:100%}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -12px}}
+.bubble{position:absolute;z-index:6;background:var(--card);color:var(--ink);border:2.5px solid var(--ink);border-radius:20px;padding:8px 14px;font-weight:800;font-size:14px;line-height:1.2;rotate:-6deg}
+.bubble::after{content:"";position:absolute;left:22px;bottom:-11px;width:16px;height:16px;background:var(--card);border-right:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);rotate:45deg}
+.badge{position:absolute;z-index:6;width:118px;height:118px;right:-2%;top:-2%;animation:spin 18s linear infinite}
+.badge text{font:800 11.5px var(--body);letter-spacing:2.6px;fill:var(--ink)}
+@keyframes spin{to{rotate:360deg}}
+.hero img{background:none;padding:0;border-radius:0;transform:none;width:100%}
+.wavy{display:block;width:100%;height:46px;margin-top:-46px;position:relative}
+/* STRIP */
+.strip{background:var(--strip);color:var(--strip-ink);overflow:hidden;padding-block:16px;rotate:-1.6deg;margin:-8px -20px 0;position:relative;z-index:2}
+.strip .row{display:flex;gap:34px;align-items:center;width:max-content;animation:slide 32s linear infinite}
+.strip span{font-family:var(--disp);font-weight:var(--dw);font-size:30px;white-space:nowrap}
+.strip img{height:58px;width:auto}
+@keyframes slide{to{transform:translateX(-50%)}}
+/* LIVING PAGE */
+.live{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.livecard{position:relative;background:var(--card);border-radius:var(--r);padding:16px;border:2.5px solid var(--ink);box-shadow:10px 10px 0 var(--a1)}
+.livecard svg{display:block;width:100%;height:auto}
+.livecard .nums text{font-family:Fredoka,sans-serif;font-weight:600;font-size:7px;fill:#2B2A4C;text-anchor:middle;dominant-baseline:central;transition:opacity .2s}
+.livecard .s{transition:fill .35s}
+.pen{position:absolute;left:0;top:0;width:76px;z-index:3;pointer-events:none;transition:transform .45s cubic-bezier(.5,0,.3,1);transform-origin:0 100%}
+.livekey{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.livekey span{display:flex;gap:6px;align-items:center;font-weight:800;font-size:14px;border:2px solid var(--line);border-radius:12px;padding:4px 10px 4px 4px;transition:border-color .2s,background .2s}
+.livekey span.on{border-color:var(--ink);background:var(--paper)}
+.livekey i{width:24px;height:24px;border-radius:7px;border:1.5px solid #1b1b1b;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px}
+.tag{display:inline-block;background:var(--a3);color:var(--ink);border-radius:999px;padding:3px 12px;font-weight:800;font-size:13px}
+.live .copy p{font-size:18px;color:var(--mut);max-width:30em}
+.live .copy h3{font-size:24px;margin:22px 0 6px}
+.yourturn{margin-top:14px}
+/* QUIZ panel */
+.qpanel{background:var(--a4);border-radius:calc(var(--r) + 10px);padding:44px;display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;align-items:center;position:relative;overflow:visible}
+.qpanel .st{position:absolute}
+.quiz{border:2.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);border-radius:var(--r)}
+.quiz .dots i.on{background:var(--cta)}
+.quiz .q{font-family:var(--disp);font-weight:var(--dw)}
+/* TOPICS */
+.topics{grid-template-columns:repeat(3,1fr);gap:22px}
+.topic{border:2.5px solid var(--ink);border-radius:var(--r);transition:transform .25s cubic-bezier(.3,1.5,.6,1)}
+.topic:nth-child(1){background:var(--a1)!important}.topic:nth-child(2){background:var(--a2)!important}.topic:nth-child(3){background:var(--a3)!important}
+.topic:hover{transform:translateY(-8px) rotate(-1.5deg)}.topic:nth-child(2):hover{transform:translateY(-8px) rotate(1.5deg)}
+.topic .pair{position:relative;display:block}.topic .pair img{border:2px solid var(--ink)}
+.topic .pair img.c{position:absolute;inset:0;opacity:0;transition:opacity .45s}
+.topic:hover .pair img.c,.topic:focus-visible .pair img.c{opacity:1}
+.topic h3{font-size:24px}
+.soon span{border-color:var(--ink);color:var(--ink);background:var(--card);transition:transform .2s}.soon span:hover{transform:rotate(-4deg)}
+/* REASONS: sticky picture */
+.reasons{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.reasons .pin{position:sticky;top:110px;aspect-ratio:1;background:var(--card);border:2.5px solid var(--ink);border-radius:var(--r);overflow:hidden;box-shadow:10px 10px 0 var(--a2)}
+.reasons .pin img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:18px;opacity:0;transition:opacity .4s,transform .4s;transform:scale(.97)}
+.reasons .pin img.on{opacity:1;transform:none}
+.reason{min-height:62vh;display:flex;flex-direction:column;justify-content:center;padding-block:20px}
+.reason:first-child{min-height:auto;padding-top:120px}
+.reason .ico{width:64px;height:64px;margin-bottom:14px}
+.reason h3{font-size:clamp(26px,3vw,36px);margin-bottom:10px}.reason p{font-size:19px;color:var(--mut);max-width:28em}
+.reason img.m{display:none}
+/* LADDER + stats */
+.ladder{border:2.5px solid var(--ink);border-radius:var(--r);background:var(--card)}
+.ladder .seg button[aria-pressed=true]{background:var(--ink)}
+.ladder .lv button[aria-pressed=true]{border-color:var(--ink);background:var(--a3)}
+.ladder .stat b{font-family:var(--disp);font-weight:var(--dw)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+.stats div{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:20px}
+.stats b{display:block;font-family:var(--disp);font-weight:var(--dw);font-size:clamp(34px,4vw,52px);line-height:1;font-variant-numeric:tabular-nums}
+.stats span{font-size:14px;opacity:.8;font-weight:700}
+/* FREE */
+.free{background:var(--a3);border-radius:calc(var(--r) + 10px);padding:44px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;position:relative;color:var(--ink)}
+.free h2{color:var(--ink)}.free p{font-size:18px}
+.free .cbn{border:2.5px solid var(--ink)}
+.free .mascot{position:absolute;width:150px;left:-30px;top:-70px;rotate:-10deg}
+/* SHELF */
+.shelf{display:flex;gap:34px;align-items:flex-start;justify-content:flex-start;flex-wrap:wrap;max-width:none;position:relative}
+.book{width:250px;position:relative;z-index:1}
+.book img{border-radius:4px 10px 10px 4px;box-shadow:inset 6px 0 0 rgba(0,0,0,.12),8px 0 0 #e9e4dc,10px 10px 0 rgba(0,0,0,.15);transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.book:hover img{transform:translateY(-16px) rotate(-3deg)}
+.book .tag2{display:inline-block;margin-top:10px;background:var(--a3);color:var(--ink);border-radius:999px;padding:3px 10px;font-weight:800;font-size:13px}
+.book h3{font-size:22px;margin-top:14px}.book p{color:var(--mut)}
+.faq details{border:2px solid var(--ink);border-radius:14px}.faq summary{list-style:none}.faq summary::after{content:"+";float:right;font-weight:800;font-size:22px;line-height:1}.faq details[open] summary::after{content:"\2212"}
+.guide{border:2px solid var(--ink);border-radius:var(--r);transition:transform .2s,background .2s}.guide:hover{transform:translateY(-4px);background:var(--a1)}
+.bigmark{font-family:var(--disp);font-weight:var(--dw);font-size:clamp(64px,15vw,210px);line-height:.85;letter-spacing:var(--track);text-align:center;color:var(--ink);margin:70px 0 0;position:relative}
+.bigmark img{position:absolute;width:12%;bottom:30%;animation:bob 4s ease-in-out infinite}
+footer{margin-top:0}
+.reveal{transition:transform .7s cubic-bezier(.2,.9,.3,1)}.reveal.pre{transform:translateY(26px)}
+@media(max-width:860px){.hero .in,.live,.qpanel,.free,.reasons{grid-template-columns:1fr}.scene{max-width:440px}
+ .reasons .pin{display:none}.reason,.reason:first-child{min-height:auto;padding-top:10px}.reason img.m{display:block;width:100%;max-width:420px;border:2.5px solid var(--ink);border-radius:var(--r);background:var(--card);padding:12px;margin-top:14px}
+ .topics{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:10px;margin-inline:-20px;padding-inline:20px}.topics .topic{flex:0 0 74%;scroll-snap-align:center}.topics .topic p{display:block}.stats{grid-template-columns:1fr 1fr}.brand{font-size:18px}.brand i{width:24px;height:24px}nav a{margin-left:12px}.qpanel,.free{padding:26px}.qpanel .st{display:none}.free .mascot{width:96px;left:auto;right:-6px;top:-50px}
+ .home section{padding-block:52px}.book{width:200px}}
+@media(prefers-reduced-motion:reduce){.st,.badge,.strip .row,.bigmark img{animation:none}.reveal.pre{transform:none}.pen{transition:none}}
 """
 
-def page(title, desc, body, path, jsonld=None, canonical=None):
+FONTS = "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500,100;9..144,600,100&family=Figtree:wght@400;500;700;800&family=Fredoka:wght@600&display=swap"
+def page(title, desc, body, path, jsonld=None, canonical=None, main_class="wrap", tail=""):
     can = canonical or f"{SITE}/{path}"
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j)}</script>' for j in (jsonld if isinstance(jsonld, list) else [jsonld])) if jsonld else ""
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{can}">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:type" content="website"><meta property="og:image" content="{SITE}/img/hero_group.png"><meta property="og:url" content="{can}">
+<link rel="icon" type="image/png" href="{SITE}/img/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="{FONTS}">
 <style>{CSS}</style>{ld}</head><body>
+<div class="topbar">Free coloring page: print one real page from each book &middot; <a href="{SITE}/free.html">Get them here</a></div>
 <header><div class="wrap"><a class="brand" href="{SITE}/"><i></i>Hop Along Books</a><nav><a href="{SITE}/#topics">Books</a><a href="{SITE}/free.html">Free pages</a><a href="{SITE}/blog/">Guides</a><a href="{SITE}/about.html">About</a></nav></div></header>
-<main class="wrap">{body}</main>
+<main class="{main_class}">{body}</main>
 <footer><div class="wrap">&copy; 2026 Hop Along Books. Color by number books for ages 3-5. Available on Amazon. &middot; <a href="{SITE}/about.html">About</a> &middot; <a href="{SITE}/blog/">Guides for parents</a></div></footer>
-</body></html>"""
+{tail}</body></html>"""
     full = os.path.join(ROOT, path); os.makedirs(os.path.dirname(full), exist_ok=True); open(full, "w").write(html)
 
 def book_card(b):
-    return f"""<a class="book" href="{SITE}/books/{b['slug']}.html"><img src="{SITE}/img/{b['key']}_cover.jpg" alt="{b['title']} cover">
+    return f"""<a class="book" href="{SITE}/books/{b['slug']}.html"><img src="{SITE}/img/{b['key']}_cover.jpg" alt="{b['title']} cover" loading="lazy" width="800" height="1035">
 <h3>{b['short']}</h3><p>{b['sub']}</p><span class="tag">{b['status']}</span></a>"""
 
 
@@ -177,35 +368,110 @@ def faq_ld(items):
 # ---------- home ----------
 def topic_count(t): 
     n=len([b for b in BOOKS if b["topic"]==t["slug"]]); return f"{n} book" + ("" if n==1 else "s")
+# Home layout (2026-10 redesign, chosen by V: "C+" layout with the C2 palette).
+# Interactive parts (living page, quiz, level ladder, try-it colorer) live in assets/home.js;
+# HAB below hands it the book data so prices/links/status stay in one place (BOOKS).
+STICKERS = [("st_trex", "Silly dinos"), ("st_truck", "Fire trucks"), ("st_cat", "Kittens"), ("st_rocket", "Rockets"), ("st_penguin", "Penguins"), ("st_baby", "Baby dinos")]
+strip_row = "".join(f'<img class="sticker" src="{SITE}/img/{i}.png" alt="" width="66" height="58"><span>{t}</span><span aria-hidden="true">&#10022;</span>' for i, t in STICKERS)
+ICON_KEY = '<svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="10" width="56" height="44" rx="10" fill="var(--a1)" stroke="var(--ink)" stroke-width="3"/><rect x="12" y="20" width="12" height="12" rx="3" fill="#EE204D" stroke="var(--ink)" stroke-width="2"/><path d="M30 26h22M12 42h40" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/></svg>'
+ICON_HAND = '<svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="var(--a2)" stroke="var(--ink)" stroke-width="3"/><path d="M14 32h36M14 32l7-6M14 32l7 6M50 32l-7-6M50 32l-7 6" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+ICON_FLIP = '<svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 12h30l14 14v26H10z" fill="var(--a4)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M40 12v14h14" fill="var(--card)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="38" r="4" fill="var(--ink)"/><path d="M33 38h12" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/></svg>'
+P_KEY = "<h3>They can read the key on their own</h3><p>Every number has a swatch and the color's name - Red, Blue, Green. No squinting at a tiny dot, and no shades you don't own. For Sky Blue, any light blue crayon works.</p>"
+P_BIG = "<h3>Big enough for a fist full of crayon</h3><p>Level 1 spaces are about an inch wide. Even the busiest Level 5 scene keeps every space around half an inch. We measure every page so small hands stay inside the lines without help.</p>"
+P_FLIP = "<h3>Flip it over, there's more</h3><p>Pictures are printed on one side, so markers can't ruin the next one. Behind each picture: a fact to read aloud, a strip to test colors, a face to circle, and a box to draw their own.</p>"
+FREE_NAME = {"things-that-go": "Fire Truck", "animals": "Cat", "dinosaurs": "T-Rex Eats an Apple"}
+HAB = dict(site=SITE, free=FREE_NAME,
+           books={b["topic"]: dict(t=b["short"], sub=b["sub"], url=f"{SITE}/books/{b['slug']}.html", amz=b["amazon"], live=b["status"].startswith("Available"), status=b["status"], key=b["key"]) for b in BOOKS})
 home_body = f"""
-<div class="hero" style="margin:0 -20px"><div class="wrap">
-<div><h1>Coloring books little hands can actually finish</h1>
-<p>Big shapes, color names written on every page, and pictures that still look like a fire truck or a kitten when they're done. Every page is measured for the age on the cover.</p>
-<a class="btn" href="#topics">Find a book</a> <a class="btn soft" href="{SITE}/free.html" style="margin-left:8px">Free pages to print</a></div>
-<img class="hero-art" src="{SITE}/img/hero_group.png" alt="Finished pages from Hop Along books: a T-Rex, a fire truck, a cat, a rocket, a penguin and a baby dinosaur">
-</div><svg class="wave" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0,20 C150,45 300,-5 450,20 C600,45 750,-5 900,20 C1050,45 1150,0 1200,20 L1200,40 L0,40 Z" fill="#FFF8EC"/></svg></div>
+<section class="hero"><div class="in">
+ <div>
+  <span class="eyebrow">Color by number &middot; Ages 3-5</span>
+  <h1>Coloring books little hands can actually finish</h1>
+  <p class="lede">Big shapes, color names written on every page, and pictures that still look like a fire truck or a kitten when they're done. Every page is measured for the age on the cover.</p>
+  <div class="ctas"><a class="btn" href="#finder">Find a book</a><a class="btn soft" href="{SITE}/free.html">Free pages to print</a></div>
+  <ul class="proof"><li>45 pictures</li><li>5 levels, easy to harder</li><li>Color names on every key</li></ul>
+ </div>
+ <div class="scene" id="scene" role="img" aria-label="Hop Along books on a table with crayons and characters from the books: a T-Rex, a rocket, a cat and a baby dinosaur">
+  <div class="table"></div>
+  <img class="bk3 b2" src="{SITE}/img/book2_cover_sm.jpg" alt="" width="440" height="569">
+  <img class="bk3 b3" src="{SITE}/img/book3_cover_sm.jpg" alt="" width="440" height="569">
+  <img class="bk3 b1" src="{SITE}/img/book1_cover_sm.jpg" alt="" width="440" height="569" fetchpriority="high">
+  <div class="crayon" style="--c:#EE204D;left:8%;bottom:14%;rotate:-14deg"></div>
+  <div class="crayon" style="--c:#1F75FE;left:52%;bottom:9%;rotate:8deg"></div>
+  <div class="crayon" style="--c:#1CAC78;left:30%;bottom:6%;rotate:-3deg"></div>
+  <div class="st" data-d="18" style="width:30%;left:-6%;top:44%;animation-delay:-1s"><img class="sticker" src="{SITE}/img/st_trex.png" alt=""></div>
+  <div class="st" data-d="28" style="width:22%;right:-3%;top:6%;animation-delay:-2.2s;rotate:12deg"><img class="sticker" src="{SITE}/img/st_rocket.png" alt=""></div>
+  <div class="st" data-d="12" style="width:26%;right:-6%;top:56%;animation-delay:-3.1s"><img class="sticker" src="{SITE}/img/st_cat.png" alt=""></div>
+  <div class="st" data-d="22" style="width:20%;left:4%;top:2%;animation-delay:-.4s;rotate:-8deg"><img class="sticker" src="{SITE}/img/st_baby.png" alt=""></div>
+  <div class="bubble" style="left:2%;top:30%">Color names<br>on every key!</div>
+  <svg class="badge" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="var(--a3)" stroke="var(--ink)" stroke-width="3"/><path id="bc" d="M60,60 m-40,0 a40,40 0 1,1 80,0 a40,40 0 1,1 -80,0" fill="none"/><text><textPath href="#bc">MEASURED FOR LITTLE HANDS &#9733; AGES 3-5 &#9733;</textPath></text><text x="60" y="66" text-anchor="middle" style="font-size:20px;letter-spacing:0">&#9733;</text></svg>
+ </div>
+</div></section>
+<div class="strip" aria-hidden="true"><div class="row">{strip_row}{strip_row}</div></div>
 
-<h2 id="topics">What does your kid love?</h2>
-<div class="topics">{''.join(f'<a class="topic" style="background:{t["color"]}" href="{SITE}/topics/{t["slug"]}.html"><img src="{SITE}/img/{t["img"]}" alt=""><h3>{t["name"]}</h3><p>{t["blurb"]}</p><span class="count">{topic_count(t)}</span></a>' for t in TOPICS)}</div>
-<div class="soon" aria-label="Coming soon">{''.join(f'<span>{x} &middot; coming soon</span>' for x in SOON)}</div>
+<section><div class="in live">
+ <div class="livecard"><div id="livepage"><img src="{SITE}/img/hero_truck.jpg" alt="A finished Level 2 fire truck page" style="display:block;width:100%"></div><div class="livekey" id="livekey"></div></div>
+ <div class="copy">
+  <span class="tag">Real pages from the books</span>
+  <h2 style="margin-top:14px">Watch a page come to life</h2>
+  <p>Find the number, match it to the color on the key, fill it in. This fire truck is a Level 2 page: 4 colors, each one named on the key.</p>
+  <p>The rocket and the kitten come next. Tap below to color one yourself.</p>
+  <button type="button" class="btn soft yourturn" id="yourturn">Your turn: color one here</button>
+ </div>
+</div></section>
 
-<h2>How old is your little one?</h2>
-<div class="ages">{''.join((f'<a class="age" href="{SITE}/ages/{g["slug"]}.html"><b>{g["name"]}</b>{g["blurb"]}</a>' if g["live"] else f'<div class="age off"><b>{g["name"]}</b>{g["blurb"]} Coming next.</div>') for g in AGES)}</div>
+<section id="finder"><div class="in">
+ <div class="qpanel">
+  <img class="st sticker" src="{SITE}/img/st_penguin.png" alt="" style="width:120px;right:-20px;top:-60px;rotate:10deg">
+  <div><span class="tag">Find their book in 3 taps</span><h2 style="margin-top:14px">Not sure which one?</h2><p style="font-size:18px;max-width:26em">Tell us what they love and how they color today. We'll point you to the book and the level to start on.</p></div>
+  <div class="quiz" id="quiz" aria-live="polite"><p class="q">What does your child love most?</p><div class="opts">{''.join(f'<a class="btn soft" href="{SITE}/topics/{t["slug"]}.html">{t["name"]}</a>' for t in TOPICS)}</div></div>
+ </div>
+</div></section>
 
-<h2>Why moms keep these in the car</h2>
-<div class="promise"><img src="{SITE}/img/book3_B3_key.jpg" alt="Color key with the color name next to each number"><div><h3>They can read the key on their own</h3><p>Every number has a swatch and the color's name - Red, Blue, Green. No squinting at a tiny dot, and no shades you don't own. For Sky Blue, any light blue crayon works.</p></div></div>
-<div class="promise"><img src="{SITE}/img/hero_trex.jpg" alt="Level 1 page: a T-Rex with three big areas to color"><div><h3>Big enough for a fist full of crayon</h3><p>Level 1 spaces are about an inch wide. Even the busiest Level 5 scene keeps every space around half an inch. We measure every page so small hands stay inside the lines without help.</p></div></div>
-<div class="promise"><img src="{SITE}/img/book3_B2_back.jpg" alt="The activity page behind each picture"><div><h3>Flip it over, there's more</h3><p>Pictures are printed on one side, so markers can't ruin the next one. Behind each picture: a fact to read aloud, a strip to test colors, a face to circle, and a box to draw their own.</p></div></div>
+<section id="topics" style="padding-top:20px"><div class="in">
+ <h2>What does your kid love?</h2>
+ <div class="topics">{''.join(f'<a class="topic" style="background:{t["color"]}" href="{SITE}/topics/{t["slug"]}.html"><span class="pair"><img src="{SITE}/img/{t["numbered"]}" alt="{t["name"]} page with numbers, ready to color" loading="lazy"><img class="c" src="{SITE}/img/{t["img"]}" alt="" loading="lazy"></span><h3>{t["name"]}</h3><p>{t["blurb"]}</p><span class="count">{topic_count(t)}</span></a>' for t in TOPICS)}</div>
+ <div class="soon" aria-label="Coming soon">{''.join(f'<span>{x} &middot; coming soon</span>' for x in SOON)}</div>
+</div></section>
 
-<div class="band"><div><h2>Try a page tonight, free</h2><p>Print a real page from each book, with its answer picture. See if the level is right before you buy.</p><a class="btn" href="{SITE}/free.html">Print free pages</a></div><img src="{SITE}/img/free_cat.jpg" alt="Free printable page: a cat to color by number"></div>
+<section style="padding-top:20px"><div class="in">
+ <h2>How old is your little one?</h2>
+ <div class="ages">{''.join((f'<a class="age" href="{SITE}/ages/{g["slug"]}.html"><b>{g["name"]}</b>{g["blurb"]}</a>' if g["live"] else f'<div class="age off"><b>{g["name"]}</b>{g["blurb"]} Coming next.</div>') for g in AGES)}</div>
+</div></section>
 
-<h2 id="books">All books</h2>
-<div class="shelf">{''.join(book_card(b) for b in BOOKS)}</div>
+<section style="padding-top:20px"><div class="in">
+ <h2>Why moms keep these in the car</h2>
+ <div class="reasons">
+  <div class="pin" id="pin"><img class="on" src="{SITE}/img/book3_B3_key.jpg" alt="Color key with the color name next to each number" loading="lazy"><img src="{SITE}/img/hero_trex.jpg" alt="Level 1 page: a T-Rex with three big areas to color" loading="lazy"><img src="{SITE}/img/book3_B2_back.jpg" alt="The activity page behind each picture" loading="lazy"></div>
+  <div>
+   <div class="reason" data-i="0">{ICON_KEY}{P_KEY}<img class="m" src="{SITE}/img/book3_B3_key.jpg" alt="" loading="lazy"></div>
+   <div class="reason" data-i="1">{ICON_HAND}{P_BIG}<img class="m" src="{SITE}/img/hero_trex.jpg" alt="" loading="lazy"></div>
+   <div class="reason" data-i="2">{ICON_FLIP}{P_FLIP}<img class="m" src="{SITE}/img/book3_B2_back.jpg" alt="" loading="lazy"></div>
+  </div>
+ </div>
+</div></section>
 
-<h2>Questions parents ask</h2>
-{faq_html(FAQ)}
+<section style="padding-top:20px"><div class="in">
+ <h2>Watch it get harder, page by page</h2>
+ <div class="ladder" id="ladder"><div><div class="seg" role="group" aria-label="Book"></div><div class="lv" role="group" aria-label="Level"></div><div class="stat"><div><b data-s="c">3</b><span>colors in the key</span></div><div><b data-s="w">1 in</b><span>smallest space, about</span></div></div><p style="font-size:15px;color:var(--mut);margin:14px 0 0">Every book has 45 pictures in 5 levels, so the same book still works as your child grows.</p></div><div class="pic"><img src="{SITE}/img/book1_A1_level.jpg" alt="Level 1 example page" loading="lazy"></div></div>
+ <div class="stats"><div><b data-count="45">45</b><span>pictures in every book</span></div><div><b data-count="5">5</b><span>levels, easy to harder</span></div><div><b>3-8</b><span>colors per picture</span></div><div><b>102</b><span>pages, 8.5 x 11 in</span></div></div>
+</div></section>
 
-<h2>For parents</h2>
+<section style="padding-top:30px"><div class="in">
+ <div class="free"><img class="mascot sticker" src="{SITE}/img/st_cat.png" alt="" loading="lazy">
+  <div><h2>Try a page tonight, free</h2><p>Color this one on screen first. Then print a real page from each book, with its answer picture, and see if the level is right before you buy.</p><a class="btn" href="{SITE}/free.html">Print free pages</a></div>
+  <div class="cbn" id="mini-cbn"><img src="{SITE}/img/free_cat.jpg" alt="Free printable page: a cat to color by number" loading="lazy" style="width:100%"></div>
+ </div>
+</div></section>
+
+<section id="books"><div class="in">
+ <h2>All books</h2>
+ <div class="shelf">{''.join(f'<a class="book" href="{SITE}/books/{b["slug"]}.html"><img src="{SITE}/img/{b["key"]}_cover.jpg" alt="{b["title"]} cover" loading="lazy" width="800" height="1035"><h3>{b["short"]}</h3><p>{b["sub"]}</p><span class="tag2">{b["status"]}</span></a>' for b in BOOKS)}</div>
+</div></section>
+
+<section style="padding-top:10px"><div class="in"><h2>Questions parents ask</h2>{faq_html(FAQ)}</div></section>
+
+<section style="padding-top:10px"><div class="in"><h2>For parents</h2>
 <div class="guides">
 <a class="guide" href="{SITE}/blog/can-a-3-year-old-do-color-by-number.html"><h3>Can a 3-year-old do color by number?</h3><p>Yes, with the right pages. What to expect and how to help.</p></a>
 <a class="guide" href="{SITE}/blog/how-to-choose-a-color-by-number-book-for-a-3-year-old.html"><h3>How to choose a color by number book for a 3-year-old</h3><p>Five things to check before you buy, and the mistake most books make.</p></a>
@@ -214,9 +480,12 @@ home_body = f"""
 <a class="guide" href="{SITE}/blog/quiet-activities-for-a-3-year-old-on-a-plane-or-car-ride.html"><h3>Quiet activities for a plane or car ride</h3><p>What to pack for a 3-year-old, and what to leave at home.</p></a>
 <a class="guide" href="{SITE}/blog/how-to-help-a-3-year-old-hold-a-crayon.html"><h3>Helping a 3-year-old hold a crayon</h3><p>The fist grip is normal. Small things that help it grow.</p></a>
 </div>
+<div class="bigmark" aria-hidden="true">Hop Along<img class="sticker" src="{SITE}/img/st_rocket.png" alt="" style="left:-2%;rotate:-12deg" loading="lazy"><img class="sticker" src="{SITE}/img/st_baby.png" alt="" style="right:0;animation-delay:-2s" loading="lazy"></div>
+</div></section>
 """
+HOME_TAIL = f'<script>window.HAB={json.dumps(HAB)};</script><script src="{SITE}/assets/home.js" defer></script>'
 page("Hop Along Books - Color by Number for Kids Ages 3-5", "Color by number books made for ages 3-5: big shapes, color names on every key, one picture per page, a fun activity page behind each. Trucks, animals and dinosaurs. On Amazon.", home_body, "index.html",
-     jsonld=[{"@context":"https://schema.org","@type":"Organization","name":PUB,"url":SITE+"/","email":"purevibe88@gmail.com","description":"Publisher of color by number books for children ages 3-5."}, faq_ld(FAQ)], canonical=SITE+"/")
+     jsonld=[{"@context":"https://schema.org","@type":"Organization","name":PUB,"url":SITE+"/","email":"purevibe88@gmail.com","description":"Publisher of color by number books for children ages 3-5."}, faq_ld(FAQ)], canonical=SITE+"/", main_class="home", tail=HOME_TAIL)
 
 # ---------- book pages ----------
 for b in BOOKS:
