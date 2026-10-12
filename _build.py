@@ -312,6 +312,35 @@ footer{margin-top:0}
  .topics{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:10px;margin-inline:-20px;padding-inline:20px}.topics .topic{flex:0 0 74%;scroll-snap-align:center}.topics .topic p{display:block}.stats{grid-template-columns:1fr 1fr}.brand{font-size:18px}.brand i{width:24px;height:24px}nav a{margin-left:12px}.qpanel,.free{padding:26px}.qpanel .st{display:none}.free .mascot{width:96px;left:auto;right:-6px;top:-50px}
  .home section{padding-block:52px}.book{width:200px}}
 @media(prefers-reduced-motion:reduce){.st,.badge,.strip .row,.bigmark img{animation:none}.reveal.pre{transform:none}.pen{transition:none}}
+
+/* ---- hero, 2026-10 v2: headline colors itself in, books rise, characters pop ---- */
+.cw .w{position:relative;display:inline-block;white-space:nowrap;isolation:isolate}
+.cw .hl{position:absolute;left:-4%;width:108%;top:34%;height:60%;z-index:-1;overflow:visible}
+.cw .hl path{fill:none;stroke:var(--c);stroke-width:clamp(16px,2.8vw,38px);stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;animation:draw .6s cubic-bezier(.4,0,.2,1) backwards;animation-delay:calc(var(--i)*.5s + .65s)}
+.cw .w::before{content:attr(data-n);position:absolute;right:-.5em;top:-.35em;font:800 .22em/1 var(--body);letter-spacing:0;color:var(--ink);background:var(--card);border:2px solid var(--ink);border-radius:50%;width:1.9em;height:1.9em;display:grid;place-items:center;opacity:0;animation:badge 1.5s ease forwards;animation-delay:calc(var(--i)*.5s + .3s)}
+@keyframes draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes badge{0%{opacity:0;transform:scale(0)}18%{opacity:1;transform:scale(1.2)}28%{transform:scale(1)}72%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.3)}}
+.pop{position:absolute;animation:popin .7s cubic-bezier(.3,1.7,.5,1) backwards;animation-delay:var(--dl)}
+@keyframes popin{from{transform:scale(0) rotate(-25deg);opacity:0}}
+.hA{padding-block:28px 0}
+.hA .in{display:flex;flex-direction:column;align-items:center;text-align:center}
+.hA h1{font-size:clamp(44px,7.4vw,104px);line-height:1;max-width:12ch;margin:16px 0 22px}
+.hA .ctas{justify-content:center}
+.hA .stage{position:relative;width:min(920px,100%);height:clamp(210px,25vw,320px);margin-top:26px}
+.hero .fan{position:absolute;width:27%;height:auto;bottom:-34%;border-radius:4px 10px 10px 4px;box-shadow:7px 0 0 #e9e4dc,0 16px 34px rgba(31,42,68,.22);transform:none;padding:0;background:none;animation:rise 1s cubic-bezier(.2,.9,.3,1.15) backwards;transition:translate .4s cubic-bezier(.3,1.4,.5,1)}
+.hero .fan.f1{left:36.5%;z-index:3;animation-delay:.25s}.hero .fan.f2{left:16%;bottom:-42%;rotate:-11deg;z-index:2;animation-delay:.45s}.hero .fan.f3{left:57%;bottom:-42%;rotate:11deg;z-index:2;animation-delay:.6s}
+.stage:hover .fan.f1{translate:0 -18px}.stage:hover .fan.f2{translate:-14px -8px}.stage:hover .fan.f3{translate:14px -8px}
+@keyframes rise{from{transform:translateY(60%);opacity:0}}
+.hA .stage .bubble{rotate:5deg}
+.hB{padding-block:60px 90px}
+.hB .in{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.hB h1{font-size:clamp(44px,6.6vw,96px);line-height:1;margin:18px 0 28px}
+.hstage{position:relative;max-width:520px;width:100%;justify-self:center}
+.hB .livecard{rotate:1.5deg;animation:popin .8s cubic-bezier(.3,1.5,.5,1) backwards .2s}
+.hB .yourturn{display:block;margin:22px auto 0;font:inherit;font-weight:800;font-size:16px;background:none;border:0;color:var(--ink);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.intro{font-size:20px;max-width:34em;color:var(--mut);margin:-4px 0 34px}
+@media(max-width:860px){.hB .in{grid-template-columns:1fr}.hA .stage{height:56vw;margin-top:28px}.hero .fan{width:34%}.hero .fan.f1{left:33%}.hero .fan.f2{left:8%}.hero .fan.f3{left:58%}.hA .stage .bubble{display:none}}
+@media(prefers-reduced-motion:reduce){.cw .hl path,.cw .w::before,.pop,.hero .fan,.hB .livecard{animation:none}.cw .w::before{opacity:0}}
 """
 
 FONTS = "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500,100;9..144,600,100&family=Figtree:wght@400;500;700;800&family=Fredoka:wght@600&display=swap"
@@ -382,43 +411,61 @@ P_FLIP = "<h3>Flip it over, there's more</h3><p>Pictures are printed on one side
 FREE_NAME = {"things-that-go": "Fire Truck", "animals": "Cat", "dinosaurs": "T-Rex Eats an Apple"}
 HAB = dict(site=SITE, free=FREE_NAME,
            books={b["topic"]: dict(t=b["short"], sub=b["sub"], url=f"{SITE}/books/{b['slug']}.html", amz=b["amazon"], live=b["status"].startswith("Available"), status=b["status"], key=b["key"]) for b in BOOKS})
-home_body = f"""
-<section class="hero"><div class="in">
- <div>
-  <span class="eyebrow">Color by number &middot; Ages 3-5</span>
-  <h1>Coloring books little hands can actually finish</h1>
-  <p class="lede">Big shapes, color names written on every page, and pictures that still look like a fire truck or a kitten when they're done. Every page is measured for the age on the cover.</p>
-  <div class="ctas"><a class="btn" href="#finder">Find a book</a><a class="btn soft" href="{SITE}/free.html">Free pages to print</a></div>
-  <ul class="proof"><li>45 pictures</li><li>5 levels, easy to harder</li><li>Color names on every key</li></ul>
+# ----- home hero (V: the old first screen was "a pile of text, no effect") -----
+HERO = os.environ.get("HAB_HERO", "A")   # preview switch while V chooses; set the chosen one as the default
+SCRIBBLE = '<svg class="hl" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path d="M3 20 C16 10 26 25 40 15 S64 24 78 13 S92 18 97 11" pathLength="100" vector-effect="non-scaling-stroke"/></svg>'
+def hw(word, n, color):
+    return f'<span class="w" data-n="{n}" style="--c:{color};--i:{n-1}">{SCRIBBLE}{word}</span>'
+H1_WORDS = f'{hw("Coloring", 1, "#F6B8C4")} books {hw("little hands", 2, "#9ED8F5")} can actually {hw("finish", 3, "#F7D774")}'
+STICKER_POP = lambda f, style, delay: f'<div class="pop" style="{style};--dl:{delay}s"><div class="st"><img class="sticker" src="{SITE}/img/{f}.png" alt=""></div></div>'
+if HERO == "A":
+    HERO_HTML = f"""<section class="hero hA"><div class="in">
+ <span class="eyebrow">Color by number &middot; Ages 3-5</span>
+ <h1 class="cw">{H1_WORDS}</h1>
+ <div class="ctas"><a class="btn" href="#finder">Find a book</a><a class="btn soft" href="{SITE}/free.html">Free pages to print</a></div>
+ <div class="stage" role="img" aria-label="The three Hop Along books with characters from the books: a T-Rex, a rocket, a cat, a penguin and a baby dinosaur">
+  <img class="fan f2" src="{SITE}/img/book2_cover_sm.jpg" alt="" width="440" height="569">
+  <img class="fan f3" src="{SITE}/img/book3_cover_sm.jpg" alt="" width="440" height="569">
+  <img class="fan f1" src="{SITE}/img/book1_cover_sm.jpg" alt="" width="440" height="569" fetchpriority="high">
+  {STICKER_POP("st_trex", "width:17%;left:2%;top:18%", .9)}
+  {STICKER_POP("st_rocket", "width:12%;left:20%;top:-4%", 1.05)}
+  {STICKER_POP("st_cat", "width:15%;right:3%;top:22%", 1.2)}
+  {STICKER_POP("st_baby", "width:12%;right:19%;top:-2%", 1.35)}
+  {STICKER_POP("st_penguin", "width:12%;left:14%;bottom:-2%", 1.5)}
+  <div class="bubble pop" style="right:6%;top:-14%;--dl:1.7s">Color names<br>on every key!</div>
  </div>
- <div class="scene" id="scene" role="img" aria-label="Hop Along books on a table with crayons and characters from the books: a T-Rex, a rocket, a cat and a baby dinosaur">
-  <div class="table"></div>
-  <img class="bk3 b2" src="{SITE}/img/book2_cover_sm.jpg" alt="" width="440" height="569">
-  <img class="bk3 b3" src="{SITE}/img/book3_cover_sm.jpg" alt="" width="440" height="569">
-  <img class="bk3 b1" src="{SITE}/img/book1_cover_sm.jpg" alt="" width="440" height="569" fetchpriority="high">
-  <div class="crayon" style="--c:#EE204D;left:8%;bottom:14%;rotate:-14deg"></div>
-  <div class="crayon" style="--c:#1F75FE;left:52%;bottom:9%;rotate:8deg"></div>
-  <div class="crayon" style="--c:#1CAC78;left:30%;bottom:6%;rotate:-3deg"></div>
-  <div class="st" data-d="18" style="width:30%;left:-6%;top:44%;animation-delay:-1s"><img class="sticker" src="{SITE}/img/st_trex.png" alt=""></div>
-  <div class="st" data-d="28" style="width:22%;right:-3%;top:6%;animation-delay:-2.2s;rotate:12deg"><img class="sticker" src="{SITE}/img/st_rocket.png" alt=""></div>
-  <div class="st" data-d="12" style="width:26%;right:-6%;top:56%;animation-delay:-3.1s"><img class="sticker" src="{SITE}/img/st_cat.png" alt=""></div>
-  <div class="st" data-d="22" style="width:20%;left:4%;top:2%;animation-delay:-.4s;rotate:-8deg"><img class="sticker" src="{SITE}/img/st_baby.png" alt=""></div>
-  <div class="bubble" style="left:2%;top:30%">Color names<br>on every key!</div>
-  <svg class="badge" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="var(--a3)" stroke="var(--ink)" stroke-width="3"/><path id="bc" d="M60,60 m-40,0 a40,40 0 1,1 80,0 a40,40 0 1,1 -80,0" fill="none"/><text><textPath href="#bc">MEASURED FOR LITTLE HANDS &#9733; AGES 3-5 &#9733;</textPath></text><text x="60" y="66" text-anchor="middle" style="font-size:20px;letter-spacing:0">&#9733;</text></svg>
- </div>
-</div></section>
-<div class="strip" aria-hidden="true"><div class="row">{strip_row}{strip_row}</div></div>
-
-<section><div class="in live">
+</div></section>"""
+    LIVE_HTML = f"""<section><div class="in live">
  <div class="livecard"><div id="livepage"><img src="{SITE}/img/hero_truck.jpg" alt="A finished Level 2 fire truck page" style="display:block;width:100%"></div><div class="livekey" id="livekey"></div></div>
  <div class="copy">
   <span class="tag">Real pages from the books</span>
   <h2 style="margin-top:14px">Watch a page come to life</h2>
   <p>Find the number, match it to the color on the key, fill it in. This fire truck is a Level 2 page: 4 colors, each one named on the key.</p>
-  <p>The rocket and the kitten come next. Tap below to color one yourself.</p>
   <button type="button" class="btn soft yourturn" id="yourturn">Your turn: color one here</button>
  </div>
-</div></section>
+</div></section>"""
+else:
+    HERO_HTML = f"""<section class="hero hB"><div class="in">
+ <div class="hcopy">
+  <span class="eyebrow">Color by number &middot; Ages 3-5</span>
+  <h1 class="cw">{H1_WORDS}</h1>
+  <div class="ctas"><a class="btn" href="#finder">Find a book</a><a class="btn soft" href="{SITE}/free.html">Free pages to print</a></div>
+ </div>
+ <div class="hstage">
+  {STICKER_POP("st_trex", "width:30%;left:-14%;bottom:6%;z-index:4", 1.0)}
+  {STICKER_POP("st_cat", "width:24%;right:-10%;top:-8%;z-index:4", 1.2)}
+  {STICKER_POP("st_baby", "width:20%;right:-6%;bottom:-6%;z-index:4", 1.4)}
+  <div class="livecard"><div id="livepage"><img src="{SITE}/img/hero_truck.jpg" alt="A finished Level 2 fire truck page from Things That Go" style="display:block;width:100%"></div><div class="livekey" id="livekey"></div></div>
+  <button type="button" class="yourturn" id="yourturn">Your turn: tap to color one &rarr;</button>
+ </div>
+</div></section>"""
+    LIVE_HTML = ""
+
+home_body = f"""
+{HERO_HTML}
+<div class="strip" aria-hidden="true"><div class="row">{strip_row}{strip_row}</div></div>
+
+{LIVE_HTML}
 
 <section id="finder"><div class="in">
  <div class="qpanel">
@@ -441,6 +488,7 @@ home_body = f"""
 
 <section style="padding-top:20px"><div class="in">
  <h2>Why moms keep these in the car</h2>
+ <p class="intro">Big shapes, color names written on every page, and pictures that still look like a fire truck or a kitten when they're done. Every page is measured for the age on the cover.</p>
  <div class="reasons">
   <div class="pin" id="pin"><img class="on" src="{SITE}/img/book3_B3_key.jpg" alt="Color key with the color name next to each number" loading="lazy"><img src="{SITE}/img/hero_trex.jpg" alt="Level 1 page: a T-Rex with three big areas to color" loading="lazy"><img src="{SITE}/img/book3_B2_back.jpg" alt="The activity page behind each picture" loading="lazy"></div>
   <div>
