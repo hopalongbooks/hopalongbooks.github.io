@@ -297,6 +297,32 @@ footer{margin-top:0}
 .intro{font-size:20px;max-width:34em;color:var(--mut);margin:-4px 0 34px}
 @media(max-width:860px){.hB .in{grid-template-columns:1fr}.hA .stage{height:56vw;margin-top:28px}.hero .fan{width:34%}.hero .fan.f1{left:33%}.hero .fan.f2{left:8%}.hero .fan.f3{left:58%}.hA .stage .bubble{display:none}}
 @media(prefers-reduced-motion:reduce){.cw .hl path,.cw .w::before,.pop,.hero .fan,.hB .livecard{animation:none}.cw .w::before{opacity:0}}
+
+/* ---- 2026-10 v3: every home block is a raised slab (V: page felt scattered, wants it more 3D) ---- */
+.home section:not(.hero){padding-block:22px}
+.home #finder{padding-top:56px}
+.slab,.qpanel,.free{position:relative;border:2.5px solid var(--ink);border-radius:calc(var(--r) + 8px);padding:44px;box-shadow:12px 12px 0 var(--ink)}
+.slab>h2:first-child,.slab>h2.h2b{margin-top:0}.slab h2.h2b{margin-top:44px}
+.t-card{background:var(--card)}.t-a1{background:var(--a1)}.t-a2{background:var(--a2)}.t-a3{background:var(--a3)}.t-a4{background:var(--a4)}
+/* raised cards inside a slab: hard shadow, press down on hover */
+.topic,.age,.guide,.faq details,.ladder,.quiz,.free .cbn,.reason,.stats div{box-shadow:6px 6px 0 var(--ink);transition:transform .18s,box-shadow .18s}
+.topic,.age,.guide,.reason{border:2.5px solid var(--ink)}
+.age,.guide,.faq details,.ladder,.reason{background:var(--card)}
+.topic:hover,.age:hover,.guide:hover,.topic:nth-child(2):hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+.guide:hover{background:var(--card)}
+.age.off{box-shadow:none;border-style:dashed;background:transparent}
+.stats div{box-shadow:6px 6px 0 var(--cta)}
+.reasons3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.reason{border-radius:var(--r);padding:18px 20px 22px;display:block;min-height:0}
+.reason .rpic{aspect-ratio:1;border:2px solid var(--ink);border-radius:14px;background:#fff;overflow:hidden;margin-bottom:16px}
+.reason .rpic img{width:100%;height:100%;object-fit:contain;padding:8px}
+.reason .ico{width:44px;height:44px;margin-bottom:8px}
+.reason h3{font-size:22px;margin:0 0 6px}.reason p{font-size:16px;margin:0;color:var(--mut)}
+.slab .intro{margin-bottom:26px}
+.book img{box-shadow:inset 6px 0 0 rgba(0,0,0,.12),6px 0 0 #e9e4dc,10px 10px 0 var(--ink)}
+.bigmark{margin-top:64px}
+.book img{display:block;width:100%;height:auto;aspect-ratio:800/1035;object-fit:cover}
+@media(max-width:860px){.slab,.qpanel,.free{padding:24px;box-shadow:7px 7px 0 var(--ink);border-radius:var(--r)}.reasons3{grid-template-columns:1fr}.home section:not(.hero){padding-block:14px}.slab h2.h2b{margin-top:30px}}
 </style></head><body>
 <div class="topbar">Free coloring page: print one real page from each book &middot; <a href="https://hopalongbooks.github.io/free.html">Get them here</a></div>
 <header><div class="wrap"><a class="brand" href="https://hopalongbooks.github.io/"><i></i>Hop Along Books</a><nav><a href="https://hopalongbooks.github.io/#topics">Books</a><a href="https://hopalongbooks.github.io/free.html">Free pages</a><a href="https://hopalongbooks.github.io/blog/">Guides</a><a href="https://hopalongbooks.github.io/about.html">About</a></nav></div></header>

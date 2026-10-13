@@ -341,6 +341,32 @@ footer{margin-top:0}
 .intro{font-size:20px;max-width:34em;color:var(--mut);margin:-4px 0 34px}
 @media(max-width:860px){.hB .in{grid-template-columns:1fr}.hA .stage{height:56vw;margin-top:28px}.hero .fan{width:34%}.hero .fan.f1{left:33%}.hero .fan.f2{left:8%}.hero .fan.f3{left:58%}.hA .stage .bubble{display:none}}
 @media(prefers-reduced-motion:reduce){.cw .hl path,.cw .w::before,.pop,.hero .fan,.hB .livecard{animation:none}.cw .w::before{opacity:0}}
+
+/* ---- 2026-10 v3: every home block is a raised slab (V: page felt scattered, wants it more 3D) ---- */
+.home section:not(.hero){padding-block:22px}
+.home #finder{padding-top:56px}
+.slab,.qpanel,.free{position:relative;border:2.5px solid var(--ink);border-radius:calc(var(--r) + 8px);padding:44px;box-shadow:12px 12px 0 var(--ink)}
+.slab>h2:first-child,.slab>h2.h2b{margin-top:0}.slab h2.h2b{margin-top:44px}
+.t-card{background:var(--card)}.t-a1{background:var(--a1)}.t-a2{background:var(--a2)}.t-a3{background:var(--a3)}.t-a4{background:var(--a4)}
+/* raised cards inside a slab: hard shadow, press down on hover */
+.topic,.age,.guide,.faq details,.ladder,.quiz,.free .cbn,.reason,.stats div{box-shadow:6px 6px 0 var(--ink);transition:transform .18s,box-shadow .18s}
+.topic,.age,.guide,.reason{border:2.5px solid var(--ink)}
+.age,.guide,.faq details,.ladder,.reason{background:var(--card)}
+.topic:hover,.age:hover,.guide:hover,.topic:nth-child(2):hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
+.guide:hover{background:var(--card)}
+.age.off{box-shadow:none;border-style:dashed;background:transparent}
+.stats div{box-shadow:6px 6px 0 var(--cta)}
+.reasons3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.reason{border-radius:var(--r);padding:18px 20px 22px;display:block;min-height:0}
+.reason .rpic{aspect-ratio:1;border:2px solid var(--ink);border-radius:14px;background:#fff;overflow:hidden;margin-bottom:16px}
+.reason .rpic img{width:100%;height:100%;object-fit:contain;padding:8px}
+.reason .ico{width:44px;height:44px;margin-bottom:8px}
+.reason h3{font-size:22px;margin:0 0 6px}.reason p{font-size:16px;margin:0;color:var(--mut)}
+.slab .intro{margin-bottom:26px}
+.book img{box-shadow:inset 6px 0 0 rgba(0,0,0,.12),6px 0 0 #e9e4dc,10px 10px 0 var(--ink)}
+.bigmark{margin-top:64px}
+.book img{display:block;width:100%;height:auto;aspect-ratio:800/1035;object-fit:cover}
+@media(max-width:860px){.slab,.qpanel,.free{padding:24px;box-shadow:7px 7px 0 var(--ink);border-radius:var(--r)}.reasons3{grid-template-columns:1fr}.home section:not(.hero){padding-block:14px}.slab h2.h2b{margin-top:30px}}
 """
 
 FONTS = "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500,100;9..144,600,100&family=Figtree:wght@400;500;700;800&family=Fredoka:wght@600&display=swap"
@@ -412,7 +438,7 @@ FREE_NAME = {"things-that-go": "Fire Truck", "animals": "Cat", "dinosaurs": "T-R
 HAB = dict(site=SITE, free=FREE_NAME,
            books={b["topic"]: dict(t=b["short"], sub=b["sub"], url=f"{SITE}/books/{b['slug']}.html", amz=b["amazon"], live=b["status"].startswith("Available"), status=b["status"], key=b["key"]) for b in BOOKS})
 # ----- home hero (V: the old first screen was "a pile of text, no effect") -----
-HERO = os.environ.get("HAB_HERO", "A")   # preview switch while V chooses; set the chosen one as the default
+HERO = os.environ.get("HAB_HERO", "B")   # V chose B (2026-10-13)
 SCRIBBLE = '<svg class="hl" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><path d="M3 20 C16 10 26 25 40 15 S64 24 78 13 S92 18 97 11" pathLength="100" vector-effect="non-scaling-stroke"/></svg>'
 def hw(word, n, color):
     return f'<span class="w" data-n="{n}" style="--c:{color};--i:{n-1}">{SCRIBBLE}{word}</span>'
@@ -475,51 +501,45 @@ home_body = f"""
  </div>
 </div></section>
 
-<section id="topics" style="padding-top:20px"><div class="in">
+<section id="topics"><div class="in"><div class="slab t-card">
  <h2>What does your kid love?</h2>
  <div class="topics">{''.join(f'<a class="topic" style="background:{t["color"]}" href="{SITE}/topics/{t["slug"]}.html"><span class="pair"><img src="{SITE}/img/{t["numbered"]}" alt="{t["name"]} page with numbers, ready to color" loading="lazy"><img class="c" src="{SITE}/img/{t["img"]}" alt="" loading="lazy"></span><h3>{t["name"]}</h3><p>{t["blurb"]}</p><span class="count">{topic_count(t)}</span></a>' for t in TOPICS)}</div>
  <div class="soon" aria-label="Coming soon">{''.join(f'<span>{x} &middot; coming soon</span>' for x in SOON)}</div>
-</div></section>
-
-<section style="padding-top:20px"><div class="in">
- <h2>How old is your little one?</h2>
+ <h2 class="h2b">How old is your little one?</h2>
  <div class="ages">{''.join((f'<a class="age" href="{SITE}/ages/{g["slug"]}.html"><b>{g["name"]}</b>{g["blurb"]}</a>' if g["live"] else f'<div class="age off"><b>{g["name"]}</b>{g["blurb"]} Coming next.</div>') for g in AGES)}</div>
-</div></section>
+</div></div></section>
 
-<section style="padding-top:20px"><div class="in">
+<section><div class="in"><div class="slab t-a2">
  <h2>Why moms keep these in the car</h2>
  <p class="intro">Big shapes, color names written on every page, and pictures that still look like a fire truck or a kitten when they're done. Every page is measured for the age on the cover.</p>
- <div class="reasons">
-  <div class="pin" id="pin"><img class="on" src="{SITE}/img/book3_B3_key.jpg" alt="Color key with the color name next to each number" loading="lazy"><img src="{SITE}/img/hero_trex.jpg" alt="Level 1 page: a T-Rex with three big areas to color" loading="lazy"><img src="{SITE}/img/book3_B2_back.jpg" alt="The activity page behind each picture" loading="lazy"></div>
-  <div>
-   <div class="reason" data-i="0">{ICON_KEY}{P_KEY}<img class="m" src="{SITE}/img/book3_B3_key.jpg" alt="" loading="lazy"></div>
-   <div class="reason" data-i="1">{ICON_HAND}{P_BIG}<img class="m" src="{SITE}/img/hero_trex.jpg" alt="" loading="lazy"></div>
-   <div class="reason" data-i="2">{ICON_FLIP}{P_FLIP}<img class="m" src="{SITE}/img/book3_B2_back.jpg" alt="" loading="lazy"></div>
-  </div>
+ <div class="reasons3">
+  <div class="reason"><div class="rpic"><img src="{SITE}/img/book3_B3_key.jpg" alt="Color key with the color name next to each number" loading="lazy"></div>{ICON_KEY}{P_KEY}</div>
+  <div class="reason"><div class="rpic"><img src="{SITE}/img/hero_trex.jpg" alt="Level 1 page: a T-Rex with three big areas to color" loading="lazy"></div>{ICON_HAND}{P_BIG}</div>
+  <div class="reason"><div class="rpic"><img src="{SITE}/img/book3_B2_back.jpg" alt="The activity page behind each picture" loading="lazy"></div>{ICON_FLIP}{P_FLIP}</div>
  </div>
-</div></section>
+</div></div></section>
 
-<section style="padding-top:20px"><div class="in">
+<section><div class="in"><div class="slab t-a1">
  <h2>Watch it get harder, page by page</h2>
  <div class="ladder" id="ladder"><div><div class="seg" role="group" aria-label="Book"></div><div class="lv" role="group" aria-label="Level"></div><div class="stat"><div><b data-s="c">3</b><span>colors in the key</span></div><div><b data-s="w">1 in</b><span>smallest space, about</span></div></div><p style="font-size:15px;color:var(--mut);margin:14px 0 0">Every book has 45 pictures in 5 levels, so the same book still works as your child grows.</p></div><div class="pic"><img src="{SITE}/img/book1_A1_level.jpg" alt="Level 1 example page" loading="lazy"></div></div>
  <div class="stats"><div><b data-count="45">45</b><span>pictures in every book</span></div><div><b data-count="5">5</b><span>levels, easy to harder</span></div><div><b>3-8</b><span>colors per picture</span></div><div><b>102</b><span>pages, 8.5 x 11 in</span></div></div>
-</div></section>
+</div></div></section>
 
-<section style="padding-top:30px"><div class="in">
+<section><div class="in">
  <div class="free"><img class="mascot sticker" src="{SITE}/img/st_cat.png" alt="" loading="lazy">
   <div><h2>Try a page tonight, free</h2><p>Color this one on screen first. Then print a real page from each book, with its answer picture, and see if the level is right before you buy.</p><a class="btn" href="{SITE}/free.html">Print free pages</a></div>
   <div class="cbn" id="mini-cbn"><img src="{SITE}/img/free_cat.jpg" alt="Free printable page: a cat to color by number" loading="lazy" style="width:100%"></div>
  </div>
 </div></section>
 
-<section id="books"><div class="in">
+<section id="books"><div class="in"><div class="slab t-card">
  <h2>All books</h2>
  <div class="shelf">{''.join(f'<a class="book" href="{SITE}/books/{b["slug"]}.html"><img src="{SITE}/img/{b["key"]}_cover.jpg" alt="{b["title"]} cover" loading="lazy" width="800" height="1035"><h3>{b["short"]}</h3><p>{b["sub"]}</p><span class="tag2">{b["status"]}</span></a>' for b in BOOKS)}</div>
-</div></section>
+</div></div></section>
 
-<section style="padding-top:10px"><div class="in"><h2>Questions parents ask</h2>{faq_html(FAQ)}</div></section>
+<section><div class="in"><div class="slab t-a4"><h2>Questions parents ask</h2>{faq_html(FAQ)}</div></div></section>
 
-<section style="padding-top:10px"><div class="in"><h2>For parents</h2>
+<section><div class="in"><div class="slab t-a3"><h2>For parents</h2>
 <div class="guides">
 <a class="guide" href="{SITE}/blog/can-a-3-year-old-do-color-by-number.html"><h3>Can a 3-year-old do color by number?</h3><p>Yes, with the right pages. What to expect and how to help.</p></a>
 <a class="guide" href="{SITE}/blog/how-to-choose-a-color-by-number-book-for-a-3-year-old.html"><h3>How to choose a color by number book for a 3-year-old</h3><p>Five things to check before you buy, and the mistake most books make.</p></a>
@@ -527,7 +547,7 @@ home_body = f"""
 <a class="guide" href="{SITE}/blog/markers-vs-crayons-for-toddler-coloring-books.html"><h3>Markers or crayons?</h3><p>What works at 3, at 5, and how to stop bleed-through.</p></a>
 <a class="guide" href="{SITE}/blog/quiet-activities-for-a-3-year-old-on-a-plane-or-car-ride.html"><h3>Quiet activities for a plane or car ride</h3><p>What to pack for a 3-year-old, and what to leave at home.</p></a>
 <a class="guide" href="{SITE}/blog/how-to-help-a-3-year-old-hold-a-crayon.html"><h3>Helping a 3-year-old hold a crayon</h3><p>The fist grip is normal. Small things that help it grow.</p></a>
-</div>
+</div></div>
 <div class="bigmark" aria-hidden="true">Hop Along<img class="sticker" src="{SITE}/img/st_rocket.png" alt="" style="left:-2%;rotate:-12deg" loading="lazy"><img class="sticker" src="{SITE}/img/st_baby.png" alt="" style="right:0;animation-delay:-2s" loading="lazy"></div>
 </div></section>
 """
