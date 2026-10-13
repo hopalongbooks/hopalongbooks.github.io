@@ -94,3 +94,8 @@ if(!RM){var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e
 if(!RM)document.querySelectorAll('[data-count]').forEach(function(b){var n=+b.dataset.count,done=false;new IntersectionObserver(function(es){if(es[0].isIntersecting&&!done){done=true;var t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/900);b.textContent=Math.round(n*k*(2-k));if(k<1)requestAnimationFrame(f)})(t0)}}).observe(b)});
 
 })();
+// tilt: topic cards and book covers turn toward the pointer (mouse/pen only; off for reduced motion)
+(function(){if(!matchMedia('(hover:hover) and (pointer:fine)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+document.querySelectorAll('.topic,.book').forEach(function(c){c.classList.add('tilt');
+c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.classList.add('tilting');c.style.transform='rotateY('+(x*16).toFixed(1)+'deg) rotateX('+(-y*16).toFixed(1)+'deg) translateY(-6px)'});
+c.addEventListener('pointerleave',function(){c.classList.remove('tilting');c.style.transform=''})})})();

@@ -298,31 +298,53 @@ footer{margin-top:0}
 @media(max-width:860px){.hB .in{grid-template-columns:1fr}.hA .stage{height:56vw;margin-top:28px}.hero .fan{width:34%}.hero .fan.f1{left:33%}.hero .fan.f2{left:8%}.hero .fan.f3{left:58%}.hA .stage .bubble{display:none}}
 @media(prefers-reduced-motion:reduce){.cw .hl path,.cw .w::before,.pop,.hero .fan,.hB .livecard{animation:none}.cw .w::before{opacity:0}}
 
-/* ---- 2026-10 v3: every home block is a raised slab (V: page felt scattered, wants it more 3D) ---- */
-.home section:not(.hero){padding-block:22px}
-.home #finder{padding-top:56px}
-.slab,.qpanel,.free{position:relative;border:2.5px solid var(--ink);border-radius:calc(var(--r) + 8px);padding:44px;box-shadow:12px 12px 0 var(--ink)}
-.slab>h2:first-child,.slab>h2.h2b{margin-top:0}.slab h2.h2b{margin-top:44px}
-.t-card{background:var(--card)}.t-a1{background:var(--a1)}.t-a2{background:var(--a2)}.t-a3{background:var(--a3)}.t-a4{background:var(--a4)}
-/* raised cards inside a slab: hard shadow, press down on hover */
-.topic,.age,.guide,.faq details,.ladder,.quiz,.free .cbn,.reason,.stats div{box-shadow:6px 6px 0 var(--ink);transition:transform .18s,box-shadow .18s}
-.topic,.age,.guide,.reason{border:2.5px solid var(--ink)}
-.age,.guide,.faq details,.ladder,.reason{background:var(--card)}
-.topic:hover,.age:hover,.guide:hover,.topic:nth-child(2):hover{transform:translate(3px,3px);box-shadow:3px 3px 0 var(--ink)}
-.guide:hover{background:var(--card)}
-.age.off{box-shadow:none;border-style:dashed;background:transparent}
-.stats div{box-shadow:6px 6px 0 var(--cta)}
-.reasons3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.reason{border-radius:var(--r);padding:18px 20px 22px;display:block;min-height:0}
-.reason .rpic{aspect-ratio:1;border:2px solid var(--ink);border-radius:14px;background:#fff;overflow:hidden;margin-bottom:16px}
-.reason .rpic img{width:100%;height:100%;object-fit:contain;padding:8px}
+/* ---- 2026-10 v4: clay. Every block looks pressed out of soft clay: light from top-left, shade bottom-right, soft drop shadow.
+   V picked "clay + tilt" (2026-10-13). Hard ink borders are dropped on blocks; light and shade carry the depth. ---- */
+:root{--clay:inset 10px 10px 22px rgba(255,255,255,.62),inset -12px -14px 26px rgba(31,42,68,.12),22px 30px 50px -18px rgba(31,42,68,.30);
+ --clay-sm:inset 6px 6px 12px rgba(255,255,255,.72),inset -8px -10px 16px rgba(31,42,68,.13),12px 16px 28px -10px rgba(31,42,68,.30);
+ --clay-in:inset 4px 5px 12px rgba(31,42,68,.18),inset -3px -3px 8px rgba(255,255,255,.7);
+ --rc:40px;--rs:28px}
+.home section:not(.hero){padding-block:26px}
+.home #finder{padding-top:60px}
+.slab,.qpanel,.free{position:relative;border:0;border-radius:var(--rc);padding:46px;box-shadow:var(--clay)}
+.slab>h2:first-child{margin-top:0}.slab h2.h2b{margin-top:46px}
+.t-card{background:#FBF9F5}.t-a1{background:var(--a1)}.t-a2{background:var(--a2)}.t-a3{background:var(--a3)}.t-a4{background:var(--a4)}
+/* small clay pieces */
+.topic,.age,.guide,.faq details,.ladder,.quiz,.reason,.livecard,.free .cbn{border:0!important;box-shadow:var(--clay-sm);border-radius:var(--rs)}
+.topic:nth-child(1){background:#DCE9F3!important}.topic:nth-child(2){background:#E3EEDC!important}.topic:nth-child(3){background:#F8E6BC!important}
+.topic .pair img{border:0;border-radius:18px;box-shadow:var(--clay-in);background:#fff}
+.age,.guide,.reason,.quiz,.ladder,.faq details,.livecard,.free .cbn{background:#fff}
+.age.off{box-shadow:var(--clay-in);background:transparent}
+.topic,.age,.guide,.reason{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.age:hover,.guide:hover,.reason:hover{transform:translateY(-6px) scale(1.02)}
+.guide:hover{background:#fff}
+.faq details{margin-bottom:12px}
+.quiz .opts button{border:0;background:var(--paper);box-shadow:inset 4px 4px 8px rgba(255,255,255,.8),inset -5px -6px 10px rgba(31,42,68,.1),6px 8px 14px -6px rgba(31,42,68,.25)}
+.quiz .opts img{box-shadow:var(--clay-in)}
+.ladder .lv button,.ladder .seg button{border:0!important;box-shadow:inset 3px 3px 6px rgba(255,255,255,.8),inset -4px -5px 8px rgba(31,42,68,.12),4px 6px 10px -5px rgba(31,42,68,.25)}
+.ladder .lv button[aria-pressed=true],.ladder .seg button[aria-pressed=true]{box-shadow:var(--clay-in)}
+.ladder .stat>div{box-shadow:var(--clay-in)}
+.stats div{background:var(--ink);border-radius:var(--rs);box-shadow:inset 6px 6px 12px rgba(255,255,255,.14),inset -8px -10px 16px rgba(0,0,0,.35),12px 16px 28px -10px rgba(31,42,68,.45)}
+.reasons3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.reason{padding:18px 20px 24px;display:block;min-height:0}
+.reason .rpic{aspect-ratio:1;border-radius:20px;background:#fff;overflow:hidden;margin-bottom:16px;box-shadow:var(--clay-in)}
+.reason .rpic img{width:100%;height:100%;object-fit:contain;padding:10px}
 .reason .ico{width:44px;height:44px;margin-bottom:8px}
 .reason h3{font-size:22px;margin:0 0 6px}.reason p{font-size:16px;margin:0;color:var(--mut)}
-.slab .intro{margin-bottom:26px}
-.book img{box-shadow:inset 6px 0 0 rgba(0,0,0,.12),6px 0 0 #e9e4dc,10px 10px 0 var(--ink)}
+.slab .intro{margin-bottom:28px}
+/* puffy buttons */
+.btn{border:0!important;box-shadow:inset 4px 4px 8px rgba(255,255,255,.35),inset -5px -6px 10px rgba(0,0,0,.22),8px 12px 20px -8px rgba(46,70,201,.55)}
+.btn.soft{box-shadow:inset 4px 4px 8px rgba(255,255,255,.9),inset -5px -6px 10px rgba(31,42,68,.12),8px 12px 20px -8px rgba(31,42,68,.3)}
+.btn:active{box-shadow:var(--clay-in)}
+/* books: real covers, lifted with a soft shadow; tilt is added by home.js */
+.book img{display:block;width:100%;height:auto;aspect-ratio:800/1035;object-fit:cover;border-radius:6px 16px 16px 6px;box-shadow:inset 6px 0 0 rgba(0,0,0,.12),18px 26px 36px -14px rgba(31,42,68,.45)}
+/* tilt (pointer devices only, set by home.js) */
+.tilt{transform-style:preserve-3d;will-change:transform}
+.tilt.tilting{transition:transform .12s ease-out!important}
+.topic.tilt .pair,.book.tilt img{transform:translateZ(36px)}
+.topics,.shelf{perspective:1000px}
 .bigmark{margin-top:64px}
-.book img{display:block;width:100%;height:auto;aspect-ratio:800/1035;object-fit:cover}
-@media(max-width:860px){.slab,.qpanel,.free{padding:24px;box-shadow:7px 7px 0 var(--ink);border-radius:var(--r)}.reasons3{grid-template-columns:1fr}.home section:not(.hero){padding-block:14px}.slab h2.h2b{margin-top:30px}}
+@media(max-width:860px){.slab,.qpanel,.free{padding:24px;border-radius:30px}.reasons3{grid-template-columns:1fr}.home section:not(.hero){padding-block:14px}.slab h2.h2b{margin-top:30px}}
 </style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Can a 3-year-old do color by number?", "description": "Yes, with the right pages. What 3-year-olds can usually manage, what to expect, how to help, and when to wait a little longer.", "author": {"@type": "Organization", "name": "Hop Along Books"}, "publisher": {"@type": "Organization", "name": "Hop Along Books"}, "datePublished": "2026-10-08", "url": "https://hopalongbooks.github.io/blog/can-a-3-year-old-do-color-by-number.html"}</script></head><body>
 <div class="topbar">Free coloring page: print one real page from each book &middot; <a href="https://hopalongbooks.github.io/free.html">Get them here</a></div>
 <header><div class="wrap"><a class="brand" href="https://hopalongbooks.github.io/"><i></i>Hop Along Books</a><nav><a href="https://hopalongbooks.github.io/#topics">Books</a><a href="https://hopalongbooks.github.io/free.html">Free pages</a><a href="https://hopalongbooks.github.io/blog/">Guides</a><a href="https://hopalongbooks.github.io/about.html">About</a></nav></div></header>
