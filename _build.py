@@ -40,6 +40,12 @@ TOPICS = [
  dict(slug="dinosaurs", name="Dinosaurs", blurb="Silly dinos brushing teeth, baking cakes and driving trucks.", color="#EED7D3", img="hero_trex.jpg", numbered="free_trex-apple.jpg"),
 ]
 SOON = ["Ocean", "Space", "Holidays", "Bugs & Garden"]
+# Grown-up line (bold & easy, no numbers, no key) - kept apart from BOOKS so the kids' level/key logic never touches it
+GROWNUP = dict(slug="fireside-and-flurries", key="book4", short="Fireside & Flurries",
+    title="Fireside & Flurries: Bold and Easy Christmas Coloring Book for Adults and Kids",
+    sub="50 Cozy Fall, Winter and Holiday Designs", amazon="https://www.amazon.com/dp/B0HMWDQG8B", asin="B0HMWDQG8B",
+    isbn="9798162146315", price="9.99", status="Available on Amazon", pages=106, size="8.5 x 8.5 in",
+    blurb="Hot cocoa, crackling fireplaces, snowy cabins, gingerbread houses and Christmas morning: 50 cozy scenes drawn with thick, bold lines and big, simple spaces. No tiny details. Relaxing coloring you can finish in one sitting.")
 AGES = [dict(slug="3-5", name="Ages 3-5", blurb="Big shapes, 3 to 8 colors, color names on every key.", live=True),
         dict(slug="5-7", name="Ages 5-7", blurb="Smaller spaces and more colors.", live=False)]
 FREE = [dict(slug="trex-apple", name="T-Rex Eats an Apple", book="dinosaurs", level="Level 1, 3 colors"),
@@ -388,6 +394,11 @@ footer{margin-top:0}
 .topic.tilt .pair,.book.tilt img{transform:translateZ(36px)}
 .topics,.shelf{perspective:1000px}
 .bigmark{margin-top:64px}
+.grown{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;background:#EAD9CF}
+.gpic{position:relative;max-width:420px;justify-self:center;width:100%}
+.gpic img:first-child{display:block;width:78%;border-radius:8px 16px 16px 8px;box-shadow:inset 6px 0 0 rgba(0,0,0,.12),18px 26px 36px -14px rgba(31,42,68,.45);rotate:-4deg}
+.gpic .gpage{position:absolute;right:0;bottom:-6%;width:52%;border-radius:14px;background:#fff;padding:6px;box-shadow:var(--clay-sm);rotate:5deg}
+@media(max-width:860px){.grown{grid-template-columns:1fr}}
 @media(max-width:860px){.slab,.qpanel,.free{padding:24px;border-radius:30px}.reasons3{grid-template-columns:1fr}.home section:not(.hero){padding-block:14px}.slab h2.h2b{margin-top:30px}}
 """
 
@@ -556,7 +567,18 @@ home_body = f"""
 
 <section id="books"><div class="in"><div class="slab t-card">
  <h2>All books</h2>
- <div class="shelf">{''.join(f'<a class="book" href="{SITE}/books/{b["slug"]}.html"><img src="{SITE}/img/{b["key"]}_cover.jpg" alt="{b["title"]} cover" loading="lazy" width="800" height="1035"><h3>{b["short"]}</h3><p>{b["sub"]}</p><span class="tag2">{b["status"]}</span></a>' for b in BOOKS)}</div>
+ <div class="shelf">{''.join(f'<a class="book" href="{SITE}/books/{b["slug"]}.html"><img src="{SITE}/img/{b["key"]}_cover.jpg" alt="{b["title"]} cover" loading="lazy" width="800" height="1035"><h3>{b["short"]}</h3><p>{b["sub"]}</p><span class="tag2">{b["status"]}</span></a>' for b in BOOKS)}<a class="book" href="{SITE}/books/{GROWNUP["slug"]}.html"><img src="{SITE}/img/book4_cover.jpg" alt="{GROWNUP["title"]} cover" loading="lazy" width="800" height="824"><h3>{GROWNUP["short"]}</h3><p>For grown-ups &middot; {GROWNUP["sub"]}</p><span class="tag2">{GROWNUP["status"]}</span></a></div>
+</div></div></section>
+
+<section id="grownups"><div class="in"><div class="slab t-a4 grown">
+ <div class="gpic"><img src="{SITE}/img/book4_cover.jpg" alt="{GROWNUP['title']} cover" loading="lazy" width="800" height="824"><img class="gpage" src="{SITE}/img/book4_xmas.jpg" alt="A bold and easy gingerbread house coloring page" loading="lazy"></div>
+ <div>
+  <span class="tag">New &middot; for grown-ups</span>
+  <h2 style="margin-top:14px">Your turn to color, mom</h2>
+  <p class="intro" style="margin-bottom:18px">{GROWNUP['blurb']}</p>
+  <p style="margin:0 0 22px;color:var(--mut)">50 designs &middot; bold lines, big spaces &middot; {GROWNUP['size']} &middot; ${GROWNUP['price']}</p>
+  <div class="ctas"><a class="btn" href="{GROWNUP['amazon']}" rel="nofollow">Get it on Amazon</a><a class="btn soft" href="{SITE}/books/{GROWNUP['slug']}.html">See inside</a></div>
+ </div>
 </div></div></section>
 
 <section><div class="in"><div class="slab t-a4"><h2>Questions parents ask</h2>{faq_html(FAQ)}</div></div></section>
@@ -622,6 +644,55 @@ for b in BOOKS:
 <div class="shelf">{''.join(book_card(o) for o in BOOKS if o['key']!=k)}</div>
 """
     page(f"{b['title']} | Hop Along Books", f"{b['sub']}. 45 pictures in 5 levels for ages 3-5, color names on every key, one picture per page. 102 pages, 8.5 x 11 in.", body, f"books/{b['slug']}.html", jsonld=[ld, faq_ld(bfaq)])
+
+# ---------- grown-up book page ----------
+g = GROWNUP
+gld = {"@context":"https://schema.org","@type":"Book","name":g["title"],"alternativeHeadline":g["sub"],"author":{"@type":"Organization","name":PUB},"publisher":{"@type":"Organization","name":PUB},
+       "bookFormat":"https://schema.org/Paperback","numberOfPages":g["pages"],"inLanguage":"en","isbn":g["isbn"],"genre":"Adult coloring book, bold and easy, Christmas",
+       "image":f"{SITE}/img/book4_cover.jpg","url":f"{SITE}/books/{g['slug']}.html","offers":{"@type":"Offer","url":g["amazon"],"priceCurrency":"USD","price":g["price"],"availability":"https://schema.org/InStock"}}
+gfaq = [("Is Fireside & Flurries for adults or kids?", "Both. The designs are drawn for grown-ups who want relaxing, easy coloring: thick outlines and big spaces, no tiny details. Older kids enjoy them too. There are no numbers or color key in this book."),
+        ("How many pages are there?", f"50 designs, one per page, printed on one side only, plus a color test page at the front. {g['pages']} pages, {g['size']} square paperback."),
+        ("What's in it?", "5 autumn pages, 18 snowy winter pages and 27 Christmas pages: hot cocoa, fireplaces, snow globes, ice skating, gingerbread houses, Santa, stockings, ornaments and Christmas morning. Hop the bunny, Bramble the bear, Mitten the cat and Pip the fox appear throughout."),
+        ("Can I use markers?", "Yes. Pages are printed on one side, so slip a sheet of paper behind the page and markers won't reach the next design."),
+        ("Is it a good gift?", "It's made to be a stocking stuffer: square, cozy and easy enough that anyone can finish a page in one sitting.")]
+gbody = f"""
+<div class="promise" style="margin-top:36px;grid-template-columns:1fr 1.4fr;align-items:start">
+<div><img src="{SITE}/img/book4_cover.jpg" alt="{g['title']} cover" style="width:100%;border-radius:14px;border:1px solid var(--line)"></div>
+<div><span class="tag">For grown-ups</span><h1 style="margin-top:10px">{g['short']}</h1><p style="font-size:20px;color:var(--mut);margin:8px 0 14px">{g['sub']}</p><p style="font-size:18px">{g['blurb']}</p>
+<a class="btn" href="{g['amazon']}" rel="nofollow">Get it on Amazon</a> <span style="color:var(--mut);margin-left:10px">{g['status']} &middot; ${g['price']}</span></div>
+</div>
+<h2>What's in it</h2>
+<table class="spec">
+<tr><th>For</th><td>Adults, teens and seniors. Older kids enjoy it too. No numbers, no color key.</td></tr>
+<tr><th>Designs</th><td>50, one per page: 5 fall, 18 winter, 27 Christmas</td></tr>
+<tr><th>Lines</th><td>Thick, bold outlines and big open spaces. Easy on the eyes, easy to finish.</td></tr>
+<tr><th>The cast</th><td>Hop the bunny, Bramble the bear, Mitten the cat and Pip the fox: sipping cocoa, ice skating, wrapping gifts, baking cookies</td></tr>
+<tr><th>Printing</th><td>One design per page, printed on one side. Color test page at the front.</td></tr>
+<tr><th>Pages / size</th><td>{g['pages']} pages &middot; {g['size']} &middot; square paperback, matte cover</td></tr>
+<tr><th>Best with</th><td>Markers, colored pencils, gel pens or crayons. Put a sheet of paper behind the page when using markers.</td></tr>
+<tr><th>ISBN</th><td>{g['isbn']}</td></tr>
+</table>
+<h2>Fall, winter, Christmas</h2>
+<div class="three">
+<figure><img src="{SITE}/img/book4_fall.jpg" alt="Autumn porch coloring page" loading="lazy"><figcaption>Fall &middot; autumn porch</figcaption></figure>
+<figure><img src="{SITE}/img/book4_winter.jpg" alt="Hop the bunny ice skating coloring page" loading="lazy"><figcaption>Winter &middot; Hop goes ice skating</figcaption></figure>
+<figure><img src="{SITE}/img/book4_xmas.jpg" alt="Gingerbread house coloring page" loading="lazy"><figcaption>Christmas &middot; gingerbread house</figcaption></figure>
+</div>
+<h2>Cozy, not fiddly</h2>
+<div class="three">
+<figure><img src="{SITE}/img/book4_cast.jpg" alt="Bramble the bear drinking cocoa" loading="lazy"><figcaption>Bramble drinks cocoa</figcaption></figure>
+<figure><img src="{SITE}/img/book4_fire.jpg" alt="Fireplace with socks and slippers" loading="lazy"><figcaption>Fireplace, socks and slippers</figcaption></figure>
+<figure><img src="{SITE}/img/book4_morning.jpg" alt="Christmas morning scene" loading="lazy"><figcaption>Christmas morning</figcaption></figure>
+</div>
+<h2>All 50 designs</h2>
+<p style="color:var(--mut)">Every page in the book, in order.</p>
+<img src="{SITE}/img/book4_overview.jpg" alt="Overview of all 50 designs in Fireside & Flurries" loading="lazy" style="width:100%;border-radius:16px;background:#fff;padding:8px">
+<h2>Questions</h2>
+{faq_html(gfaq)}
+<h2>For the kids</h2>
+<div class="shelf">{''.join(book_card(b) for b in BOOKS)}</div>
+"""
+page(f"{g['title']} | Hop Along Books", f"{g['sub']}. Bold lines, big spaces, no tiny details. One design per page, printed one side. {g['pages']} pages, {g['size']}. ${g['price']} on Amazon.", gbody, f"books/{g['slug']}.html", jsonld=[gld, faq_ld(gfaq)])
 
 # ---------- blog ----------
 POSTS = [
@@ -814,14 +885,17 @@ page("Free Printable Color by Number for 3 Year Olds (PDF) | Hop Along Books", "
 <p style="margin-top:30px;color:var(--mut)">Free for personal and classroom use. Please don't resell.</p>""", "free.html")
 
 # sitemap + robots
-urls = [SITE+"/", SITE+"/about.html", SITE+"/blog/", SITE+"/free.html"] + [f"{SITE}/topics/{t['slug']}.html" for t in TOPICS] + [f"{SITE}/ages/{g['slug']}.html" for g in AGES if g["live"]] + [f"{SITE}/books/{b['slug']}.html" for b in BOOKS] + [f"{SITE}/blog/{p[0]}.html" for p in POSTS]
+urls = [SITE+"/", SITE+"/about.html", SITE+"/blog/", SITE+"/free.html"] + [f"{SITE}/topics/{t['slug']}.html" for t in TOPICS] + [f"{SITE}/ages/{g['slug']}.html" for g in AGES if g["live"]] + [f"{SITE}/books/{b['slug']}.html" for b in BOOKS] + [f"{SITE}/books/{GROWNUP['slug']}.html"] + [f"{SITE}/blog/{p[0]}.html" for p in POSTS]
 open(os.path.join(ROOT,"sitemap.xml"),"w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{u}</loc><lastmod>{TODAY}</lastmod></url>" for u in urls)+"</urlset>")
 llms = f"""# Hop Along Books
 
-> Hop Along Books publishes color by number activity books for children ages 3 to 5, sold as paperbacks on Amazon. Every book has 45 pictures in 5 levels (3 to 8 colors), a color key with the number, a swatch and the color name written out, spaces measured for small hands (about 1 inch at Level 1, at least about half an inch at Level 5), and one picture per page with an activity page on the back.
+> Hop Along Books publishes color by number activity books for children ages 3 to 5, plus a bold-and-easy coloring book for grown-ups, sold as paperbacks on Amazon. Every book has 45 pictures in 5 levels (3 to 8 colors), a color key with the number, a swatch and the color name written out, spaces measured for small hands (about 1 inch at Level 1, at least about half an inch at Level 5), and one picture per page with an activity page on the back.
 
 ## Books
 """ + "".join(f"- [{b['title']}]({SITE}/books/{b['slug']}.html): {b['sub']}. 102 pages, 8.5 x 11 in, $10.99." + "\n" for b in BOOKS) + f"""
+## For grown-ups
+- [{GROWNUP['title']}]({SITE}/books/{GROWNUP['slug']}.html): {GROWNUP['sub']}. Bold and easy, no numbers or color key. {GROWNUP['pages']} pages, {GROWNUP['size']}, ${GROWNUP['price']}.
+
 ## Key facts
 - Age: 3-5 (preschool and kindergarten)
 - Colors: everyday colors such as Red, Blue, Yellow, Green, Orange, Brown and Pink, each named in the key; for Sky Blue any light blue crayon works
