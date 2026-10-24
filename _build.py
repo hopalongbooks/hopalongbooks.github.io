@@ -411,8 +411,8 @@ def page(title, desc, body, path, jsonld=None, canonical=None, main_class="wrap"
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:type" content="website"><meta property="og:image" content="{SITE}/img/hero_group.png"><meta property="og:url" content="{can}">
 <link rel="icon" type="image/png" href="{SITE}/img/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="{FONTS}">
 <style>{CSS}</style>{ld}</head><body>
-<div class="topbar">Free coloring page: print one real page from each book &middot; <a href="{SITE}/free.html">Get them here</a></div>
-<header><div class="wrap"><a class="brand" href="{SITE}/"><i></i>Hop Along Books</a><nav><a href="{SITE}/#topics">Books</a><a href="{SITE}/free.html">Free pages</a><a href="{SITE}/blog/">Guides</a><a href="{SITE}/about.html">About</a></nav></div></header>
+<div class="topbar">20 free cozy Christmas coloring pages for grown-ups &middot; <a href="{SITE}/xmas/">Print them here</a> &middot; Kids pages: <a href="{SITE}/free.html">here</a></div>
+<header><div class="wrap"><a class="brand" href="{SITE}/"><i></i>Hop Along Books</a><nav><a href="{SITE}/#topics">Books</a><a href="{SITE}/free.html">Free pages</a><a href="{SITE}/xmas/">Christmas pages</a><a href="{SITE}/blog/">Guides</a><a href="{SITE}/about.html">About</a></nav></div></header>
 <main class="{main_class}">{body}</main>
 <footer><div class="wrap">&copy; 2026 Hop Along Books. Color by number books for ages 3-5. Available on Amazon. &middot; <a href="{SITE}/about.html">About</a> &middot; <a href="{SITE}/blog/">Guides for parents</a></div></footer>
 {tail}</body></html>"""
@@ -882,7 +882,8 @@ page("Free Printable Color by Number for 3 Year Olds (PDF) | Hop Along Books", "
      f"""<div style="background:var(--butter);border-radius:28px;padding:30px;margin-top:28px"><h1>Free printable color by number for 3 year olds</h1><p style="font-size:19px;margin:10px 0 0;max-width:36em">Real pages from our books for ages 3-5, each a PDF with its answer picture. Big shapes, only 3 or 4 colors, and the color names written on the key. Print on regular paper and see if the level is right for your child.</p>
 <ol class="steps">{steps}</ol></div>{signup}
 <h2>Pick a page</h2><div class="freebie">{''.join(fcard(f) for f in FREE)}</div>
-<p style="margin-top:30px;color:var(--mut)">Free for personal and classroom use. Please don't resell.</p>""", "free.html")
+<p style="margin-top:30px;color:var(--mut)">Free for personal and classroom use. Please don't resell.</p>
+<div style="background:var(--butter);border-radius:28px;padding:26px;margin-top:36px"><h2 style="margin:0 0 8px">For grown-ups: 20 free cozy Christmas pages</h2><p style="margin:0 0 14px">Bold lines, big spaces, from <i>Fireside &amp; Flurries</i>. No sign-up needed.</p><a class="btn" href="{SITE}/xmas/">See the Christmas pages</a></div>""", "free.html")
 
 # sitemap + robots
 urls = [SITE+"/", SITE+"/about.html", SITE+"/blog/", SITE+"/free.html"] + [f"{SITE}/topics/{t['slug']}.html" for t in TOPICS] + [f"{SITE}/ages/{g['slug']}.html" for g in AGES if g["live"]] + [f"{SITE}/books/{b['slug']}.html" for b in BOOKS] + [f"{SITE}/books/{GROWNUP['slug']}.html"] + [f"{SITE}/blog/{p[0]}.html" for p in POSTS]
@@ -940,7 +941,7 @@ for i, x in enumerate(XM):
 <div class="side"><h1>{x['title']}</h1><p>{x['desc']}</p>{act}{xbook()}</div></div>
 <h2>More free cozy coloring pages</h2><div class="xgrid">{''.join(xcard(m) for m in more)}</div>
 <p style="margin-top:24px"><a href="{SITE}/xmas/">See all free Christmas coloring pages</a></p>"""
-    page(f"{x['title']}{' (Free Printable PDF)' if x['free'] else ''} | Hop Along Books", x['desc'][:155], body, f"xmas/{x['slug']}.html")
+    page(f"{x['title']} | Hop Along Books", x['desc'][:155], body, f"xmas/{x['slug']}.html")
 page("Free Christmas Coloring Pages for Adults: Cozy, Easy, Printable | Hop Along Books",
      "Free printable Christmas and cozy winter coloring pages for adults and kids. Easy bold lines, big spaces. Download the PDF and print at home.",
      f"""{XCSS}<div style="background:var(--butter);border-radius:28px;padding:30px;margin-top:28px"><h1>Free cozy Christmas coloring pages</h1><p style="font-size:19px;margin:10px 0 0;max-width:36em">Easy, relaxing pages with bold lines and big spaces, for grown-ups and kids. 20 free pages: tap one, download the PDF, print at home.</p></div>
