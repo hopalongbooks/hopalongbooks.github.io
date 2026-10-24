@@ -409,7 +409,7 @@ def page(title, desc, body, path, jsonld=None, canonical=None, main_class="wrap"
     html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{can}">
 <meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:type" content="website"><meta property="og:image" content="{SITE}/img/hero_group.png"><meta property="og:url" content="{can}">
-<link rel="icon" type="image/png" href="{SITE}/img/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="{FONTS}">
+<meta name="p:domain_verify" content="dbc56bd2b5ac3a820feb8a26e39030c8"><link rel="icon" type="image/png" href="{SITE}/img/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="{FONTS}">
 <style>{CSS}</style>{ld}</head><body>
 <div class="topbar">20 free cozy Christmas coloring pages for grown-ups &middot; <a href="{SITE}/xmas/">Print them here</a> &middot; Kids pages: <a href="{SITE}/free.html">here</a></div>
 <header><div class="wrap"><a class="brand" href="{SITE}/"><i></i>Hop Along Books</a><nav><a href="{SITE}/#topics">Books</a><a href="{SITE}/free.html">Free pages</a><a href="{SITE}/xmas/">Christmas pages</a><a href="{SITE}/blog/">Guides</a><a href="{SITE}/about.html">About</a></nav></div></header>
