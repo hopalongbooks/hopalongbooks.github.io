@@ -44,7 +44,7 @@ SOON = ["Ocean", "Space", "Holidays", "Bugs & Garden"]
 GROWNUP = dict(slug="fireside-and-flurries", key="book4", short="Fireside & Flurries",
     title="Fireside & Flurries: Bold and Easy Christmas Coloring Book for Adults and Kids",
     sub="50 Cozy Fall, Winter and Holiday Designs", amazon="https://www.amazon.com/dp/B0HMWDQG8B", asin="B0HMWDQG8B",
-    isbn="9798162146315", price="9.99", status="Available on Amazon", pages=106, size="8.5 x 8.5 in",
+    isbn="9798162146315", price="9.99", status="Available on Amazon", pages=108, size="8.5 x 8.5 in",
     blurb="Hot cocoa, crackling fireplaces, snowy cabins, gingerbread houses and Christmas morning: 50 cozy scenes drawn with thick, bold lines and big, simple spaces. No tiny details. Relaxing coloring you can finish in one sitting.")
 AGES = [dict(slug="3-5", name="Ages 3-5", blurb="Big shapes, 3 to 8 colors, color names on every key.", live=True),
         dict(slug="5-7", name="Ages 5-7", blurb="Smaller spaces and more colors.", live=False)]
@@ -914,4 +914,38 @@ llms = f"""# Hop Along Books
 open(os.path.join(ROOT,"llms.txt"),"w").write(llms)
 open(os.path.join(ROOT,"robots.txt"),"w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 open(os.path.join(ROOT,".nojekyll"),"w").write("")
+
+# ---------- free Christmas/cozy pages from Book 4 (Pinterest landing pages) ----------
+import re as _re
+XM = json.load(open(os.path.join(ROOT, "xmas.json")))   # [{slug,title,label,desc,alt}]
+XCSS = """<style>.xp{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;margin-top:28px;align-items:start}
+.xp .sheet{background:#fff;border-radius:24px;padding:18px;box-shadow:0 8px 0 var(--line)}.xp .sheet img{display:block;width:100%;height:auto}
+.xp .side h1{font-size:clamp(28px,4vw,42px)}.xp .side p{font-size:18px}.xp .btn{margin:6px 0 10px}
+.xbook{display:flex;gap:16px;align-items:center;background:var(--butter);border-radius:22px;padding:18px;margin-top:22px}.xbook img{width:110px;border-radius:10px;background:#fff}
+.xgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px;margin-top:16px}.xgrid a{background:#fff;border-radius:16px;padding:10px;text-decoration:none;font-size:14px;font-weight:700;box-shadow:0 5px 0 var(--line)}.xgrid img{width:100%;aspect-ratio:1;object-fit:contain;display:block;margin-bottom:6px}
+@media(max-width:760px){.xp{grid-template-columns:1fr}}</style>"""
+G = GROWNUP
+def xbook():
+    return f'<div class="xbook"><img src="{SITE}/img/book4_cover.jpg" alt="{G["short"]} coloring book cover" loading="lazy"><div><b>Like this page? There are 50 more.</b><p style="margin:4px 0 10px;font-size:16px">This page is from <i>{G["short"]}</i>, a cozy coloring book with 50 fall, winter and Christmas scenes, bold lines and big spaces. {G["size"]}, ${G["price"]} paperback.</p><a class="btn" href="{G["amazon"]}" rel="nofollow">See the book on Amazon</a></div></div>'
+def xcard(x): return f'<a href="{SITE}/xmas/{x["slug"]}.html"><img src="{SITE}/img/xmas/{x["slug"]}.jpg" alt="{x["alt"]}" loading="lazy">{x["label"]}</a>'
+for i, x in enumerate(XM):
+    FR = [m for m in XM if m['free']]
+    more = [m for m in FR if m is not x][i % 4:][:5]
+    if x['free']:
+        act = f"""<a class="btn" href="{SITE}/free/xmas/{x['slug']}.pdf" download>Download free PDF</a>
+<p style="font-size:15px;color:var(--mut)">US Letter, prints on regular paper. Free for personal use, please don't resell.</p>"""
+    else:
+        act = f"""<p style="font-size:16px;background:#fff;border-radius:14px;padding:12px 14px">This page is one of the 50 in the book. Want to try one first? <a href="{SITE}/xmas/{more[0]['slug']}.html">Print a free page here</a>.</p>"""
+    body = f"""{XCSS}<div class="xp"><div class="sheet"><img src="{SITE}/img/xmas/{x['slug']}.jpg" alt="{x['alt']}" width="900" height="900"></div>
+<div class="side"><h1>{x['title']}</h1><p>{x['desc']}</p>{act}{xbook()}</div></div>
+<h2>More free cozy coloring pages</h2><div class="xgrid">{''.join(xcard(m) for m in more)}</div>
+<p style="margin-top:24px"><a href="{SITE}/xmas/">See all free Christmas coloring pages</a></p>"""
+    page(f"{x['title']}{' (Free Printable PDF)' if x['free'] else ''} | Hop Along Books", x['desc'][:155], body, f"xmas/{x['slug']}.html")
+page("Free Christmas Coloring Pages for Adults: Cozy, Easy, Printable | Hop Along Books",
+     "Free printable Christmas and cozy winter coloring pages for adults and kids. Easy bold lines, big spaces. Download the PDF and print at home.",
+     f"""{XCSS}<div style="background:var(--butter);border-radius:28px;padding:30px;margin-top:28px"><h1>Free cozy Christmas coloring pages</h1><p style="font-size:19px;margin:10px 0 0;max-width:36em">Easy, relaxing pages with bold lines and big spaces, for grown-ups and kids. 20 free pages: tap one, download the PDF, print at home.</p></div>
+<div class="xgrid">{''.join(xcard(x) for x in XM if x['free'])}</div>{xbook()}""", "xmas/index.html")
+urls += [f"{SITE}/xmas/"] + [f"{SITE}/xmas/{x['slug']}.html" for x in XM]
+open(os.path.join(ROOT,"sitemap.xml"),"w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{u}</loc><lastmod>{TODAY}</lastmod></url>" for u in urls)+"</urlset>")
+
 print("built", len(urls), "pages")
