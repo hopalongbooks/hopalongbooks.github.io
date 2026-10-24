@@ -412,7 +412,7 @@ def page(title, desc, body, path, jsonld=None, canonical=None, main_class="wrap"
 <meta name="p:domain_verify" content="dbc56bd2b5ac3a820feb8a26e39030c8"><link rel="icon" type="image/png" href="{SITE}/img/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="{FONTS}">
 <style>{CSS}</style>{ld}</head><body>
 <div class="topbar">20 free cozy Christmas coloring pages for grown-ups &middot; <a href="{SITE}/xmas/">Print them here</a> &middot; Kids pages: <a href="{SITE}/free.html">here</a></div>
-<header><div class="wrap"><a class="brand" href="{SITE}/"><i></i>Hop Along Books</a><nav><a href="{SITE}/#topics">Books</a><a href="{SITE}/free.html">Free pages</a><a href="{SITE}/xmas/">Christmas pages</a><a href="{SITE}/blog/">Guides</a><a href="{SITE}/about.html">About</a></nav></div></header>
+<header><div class="wrap"><a class="brand" href="{SITE}/"><i></i>Hop Along Books</a><nav><a href="{SITE}/#topics">Books</a><a href="{SITE}/free.html">Free pages</a><a href="{SITE}/xmas/">Christmas pages</a><a href="{SITE}/dino/">Dino pages</a><a href="{SITE}/blog/">Guides</a><a href="{SITE}/about.html">About</a></nav></div></header>
 <main class="{main_class}">{body}</main>
 <footer><div class="wrap">&copy; 2026 Hop Along Books. Color by number books for ages 3-5. Available on Amazon. &middot; <a href="{SITE}/about.html">About</a> &middot; <a href="{SITE}/blog/">Guides for parents</a></div></footer>
 {tail}</body></html>"""
@@ -947,6 +947,32 @@ page("Free Christmas Coloring Pages for Adults: Cozy, Easy, Printable | Hop Alon
      f"""{XCSS}<div style="background:var(--butter);border-radius:28px;padding:30px;margin-top:28px"><h1>Free cozy Christmas coloring pages</h1><p style="font-size:19px;margin:10px 0 0;max-width:36em">Easy, relaxing pages with bold lines and big spaces, for grown-ups and kids. 20 free pages: tap one, download the PDF, print at home.</p></div>
 <div class="xgrid">{''.join(xcard(x) for x in XM if x['free'])}</div>{xbook()}""", "xmas/index.html")
 urls += [f"{SITE}/xmas/"] + [f"{SITE}/xmas/{x['slug']}.html" for x in XM]
+open(os.path.join(ROOT,"sitemap.xml"),"w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{u}</loc><lastmod>{TODAY}</lastmod></url>" for u in urls)+"</urlset>")
+
+# ---------- free dinosaur color by number pages (Pinterest landing) ----------
+DN = json.load(open(os.path.join(ROOT, "dino.json")))
+B3 = [b for b in BOOKS if b["key"]=="book3"][0]
+def dbook():
+    return f'<div class="xbook" style="background:#EED7D3"><img src="{SITE}/img/book3_cover.jpg" alt="{B3["title"]} cover" loading="lazy"><div><b>Like this page? There are 45 in the book.</b><p style="margin:4px 0 10px;font-size:16px">This page is from <i>{B3["short"]}</i>, a color by number book for ages 3-5: 45 silly dinos in 5 levels from 3 to 8 colors, with the color name on every key. $9.99 paperback.</p><a class="btn" href="{B3["amazon"]}" rel="nofollow">See the book on Amazon</a></div></div>'
+def dcard(x): return f'<a href="{SITE}/dino/{x["slug"]}.html"><img src="{SITE}/img/dino/{x["slug"]}.jpg" alt="{x["alt"]}" loading="lazy" style="aspect-ratio:8.5/11">{x["label"]}</a>'
+DF=[x for x in DN if x['free']]
+for i, x in enumerate(DN):
+    more=[m for m in DF if m is not x][i%3:][:5]
+    if x['free']:
+        act=f"""<a class="btn" href="{SITE}/free/dino/{x['slug']}.pdf" download>Download free PDF</a>
+<p style="font-size:15px;color:var(--mut)">2 pages, US Letter: the picture with its color key, plus the fun-fact page from the back. Free for personal and classroom use.</p>"""
+    else:
+        act=f"""<p style="font-size:16px;background:#fff;border-radius:14px;padding:12px 14px">This page is one of the 45 in the book. Want to try one first? <a href="{SITE}/dino/{more[0]['slug']}.html">Print a free dinosaur page here</a>.</p>"""
+    body=f"""{XCSS}<div class="xp"><div class="sheet"><img src="{SITE}/img/dino/{x['slug']}.jpg" alt="{x['alt']}" width="900" height="1165"></div>
+<div class="side"><h1>{x['title']}</h1><p>{x['desc']} Level {x['level']} of 5, {x['colors']} colors, and the color name written next to every number so kids can read the key themselves.</p>{act}{dbook()}</div></div>
+<h2>More free dinosaur pages</h2><div class="xgrid">{''.join(dcard(m) for m in more)}</div>
+<p style="margin-top:24px"><a href="{SITE}/dino/">See all free dinosaur color by number pages</a> &middot; <a href="{SITE}/free.html">Free pages from every book</a></p>"""
+    page(f"{x['title']}{' (Free Printable PDF)' if x['free'] else ''} | Hop Along Books", (x['desc']+" Color by number for kids ages 3-5.")[:155], body, f"dino/{x['slug']}.html")
+page("Free Dinosaur Color by Number Pages for Kids (Printable PDF) | Hop Along Books",
+     "Free printable dinosaur color by number pages for kids ages 3-5: big shapes, 3 to 8 colors, color names on the key. Download the PDF and print at home.",
+     f"""{XCSS}<div style="background:#EED7D3;border-radius:28px;padding:30px;margin-top:28px"><h1>Free dinosaur color by number pages</h1><p style="font-size:19px;margin:10px 0 0;max-width:36em">Silly dinos doing everyday things, drawn for 3 to 5 year olds: big shapes, 3 to 8 colors, and the color name next to every number. Tap a page, download the PDF, print at home.</p></div>
+<div class="xgrid">{''.join(dcard(x) for x in DF)}</div>{dbook()}""", "dino/index.html")
+urls += [f"{SITE}/dino/"] + [f"{SITE}/dino/{x['slug']}.html" for x in DN]
 open(os.path.join(ROOT,"sitemap.xml"),"w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{u}</loc><lastmod>{TODAY}</lastmod></url>" for u in urls)+"</urlset>")
 
 print("built", len(urls), "pages")
