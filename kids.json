@@ -1,0 +1,200 @@
+[
+ {
+  "slug": "school-bus-color-by-number",
+  "title": "School Bus Coloring Page: Easy Vehicle Color by Number for Kids",
+  "label": "School Bus",
+  "desc": "A big yellow school bus with round windows and wheels, ready for the first day of school.",
+  "alt": "Color by number coloring page for kids: school bus, level 1 with 3 colors and a color key",
+  "free": true,
+  "level": 1,
+  "colors": 3,
+  "book": "book1"
+ },
+ {
+  "slug": "bunny-color-by-number",
+  "title": "Bunny: Easy Animal Color by Number for Kids Ages 3-5",
+  "label": "Bunny",
+  "desc": "A sweet little bunny with tall ears. Just 3 colors, a perfect first color by number for toddlers.",
+  "alt": "Color by number coloring page for kids: bunny, level 1 with 3 colors and a color key",
+  "free": false,
+  "level": 1,
+  "colors": 3,
+  "book": "book2"
+ },
+ {
+  "slug": "tractor-color-by-number",
+  "title": "Tractor: Easy Vehicle Color by Number for Kids Ages 3-5",
+  "label": "Tractor",
+  "desc": "A friendly farm tractor with giant back wheels. Simple shapes for a first color by number.",
+  "alt": "Color by number coloring page for kids: tractor, level 1 with 3 colors and a color key",
+  "free": false,
+  "level": 1,
+  "colors": 3,
+  "book": "book1"
+ },
+ {
+  "slug": "duck-color-by-number",
+  "title": "Duck Coloring Page: Easy Animal Color by Number for Kids",
+  "label": "Duck",
+  "desc": "A duck floating on the pond under a little cloud. Big round shapes, only 3 colors.",
+  "alt": "Color by number coloring page for kids: duck, level 1 with 3 colors and a color key",
+  "free": true,
+  "level": 1,
+  "colors": 3,
+  "book": "book2"
+ },
+ {
+  "slug": "helicopter-color-by-number",
+  "title": "Helicopter Coloring Page: Easy Vehicle Color by Number for Kids",
+  "label": "Helicopter",
+  "desc": "A little helicopter flying past the clouds. Big round shapes that are easy to stay inside.",
+  "alt": "Color by number coloring page for kids: helicopter, level 1 with 3 colors and a color key",
+  "free": true,
+  "level": 1,
+  "colors": 3,
+  "book": "book1"
+ },
+ {
+  "slug": "ladybug-color-by-number",
+  "title": "Ladybug: Easy Animal Color by Number for Kids Ages 3-5",
+  "label": "Ladybug",
+  "desc": "A round ladybug with big spots to color. Quick, simple and satisfying for little ones.",
+  "alt": "Color by number coloring page for kids: ladybug, level 1 with 3 colors and a color key",
+  "free": false,
+  "level": 1,
+  "colors": 3,
+  "book": "book2"
+ },
+ {
+  "slug": "garbage-truck-color-by-number",
+  "title": "Garbage Truck: Easy Vehicle Color by Number for Kids Ages 3-5",
+  "label": "Garbage Truck",
+  "desc": "A garbage truck on its morning route. A favorite for kids who run to the window every pickup day.",
+  "alt": "Color by number coloring page for kids: garbage truck, level 2 with 4 colors and a color key",
+  "free": false,
+  "level": 2,
+  "colors": 4,
+  "book": "book1"
+ },
+ {
+  "slug": "turtle-color-by-number",
+  "title": "Turtle Coloring Page: Easy Animal Color by Number for Kids",
+  "label": "Turtle",
+  "desc": "A turtle with a patterned shell, walking slow and steady. 4 colors and big spaces.",
+  "alt": "Color by number coloring page for kids: turtle, level 2 with 4 colors and a color key",
+  "free": true,
+  "level": 2,
+  "colors": 4,
+  "book": "book2"
+ },
+ {
+  "slug": "excavator-color-by-number",
+  "title": "Excavator Coloring Page: Easy Vehicle Color by Number for Kids",
+  "label": "Excavator",
+  "desc": "An excavator digging with its big bucket arm. Perfect for construction-loving kids.",
+  "alt": "Color by number coloring page for kids: excavator, level 3 with 5 colors and a color key",
+  "free": true,
+  "level": 3,
+  "colors": 5,
+  "book": "book1"
+ },
+ {
+  "slug": "butterfly-color-by-number",
+  "title": "Butterfly: Easy Animal Color by Number for Kids Ages 3-5",
+  "label": "Butterfly",
+  "desc": "A butterfly with big round wings to fill in. A sweet spring and summer page.",
+  "alt": "Color by number coloring page for kids: butterfly, level 2 with 4 colors and a color key",
+  "free": false,
+  "level": 2,
+  "colors": 4,
+  "book": "book2"
+ },
+ {
+  "slug": "dump-truck-color-by-number",
+  "title": "Dump Truck: Easy Vehicle Color by Number for Kids Ages 3-5",
+  "label": "Dump Truck",
+  "desc": "A dump truck with its load of dirt, ready to tip. Big shapes, real construction vibes.",
+  "alt": "Color by number coloring page for kids: dump truck, level 3 with 5 colors and a color key",
+  "free": false,
+  "level": 3,
+  "colors": 5,
+  "book": "book1"
+ },
+ {
+  "slug": "elephant-color-by-number",
+  "title": "Elephant Coloring Page: Easy Animal Color by Number for Kids",
+  "label": "Elephant",
+  "desc": "An elephant with big ears and a long trunk. 5 colors, big spaces for small hands.",
+  "alt": "Color by number coloring page for kids: elephant, level 3 with 5 colors and a color key",
+  "free": true,
+  "level": 3,
+  "colors": 5,
+  "book": "book2"
+ },
+ {
+  "slug": "police-car-color-by-number",
+  "title": "Police Car Coloring Page: Easy Vehicle Color by Number for Kids",
+  "label": "Police Car",
+  "desc": "A police car with lights on top, ready to help. Bold shapes and bright colors.",
+  "alt": "Color by number coloring page for kids: police car, level 4 with 6 colors and a color key",
+  "free": true,
+  "level": 4,
+  "colors": 6,
+  "book": "book1"
+ },
+ {
+  "slug": "owl-color-by-number",
+  "title": "Owl: Easy Animal Color by Number for Kids Ages 3-5",
+  "label": "Owl",
+  "desc": "A round owl with big eyes. 5 colors and friendly shapes.",
+  "alt": "Color by number coloring page for kids: owl, level 3 with 5 colors and a color key",
+  "free": false,
+  "level": 3,
+  "colors": 5,
+  "book": "book2"
+ },
+ {
+  "slug": "ambulance-color-by-number",
+  "title": "Ambulance: Easy Vehicle Color by Number for Kids Ages 3-5",
+  "label": "Ambulance",
+  "desc": "An ambulance with a big cross on the side, on its way to help someone.",
+  "alt": "Color by number coloring page for kids: ambulance, level 4 with 6 colors and a color key",
+  "free": false,
+  "level": 4,
+  "colors": 6,
+  "book": "book1"
+ },
+ {
+  "slug": "fox-color-by-number",
+  "title": "Fox Coloring Page: Easy Animal Color by Number for Kids",
+  "label": "Fox",
+  "desc": "A fox with a fluffy tail sitting in the grass. 6 colors, a step up for 4 and 5 year olds.",
+  "alt": "Color by number coloring page for kids: fox, level 4 with 6 colors and a color key",
+  "free": true,
+  "level": 4,
+  "colors": 6,
+  "book": "book2"
+ },
+ {
+  "slug": "monster-truck-color-by-number",
+  "title": "Monster Truck Coloring Page: Easy Vehicle Color by Number for Kids",
+  "label": "Monster Truck",
+  "desc": "A monster truck with huge wheels. The hardest level, still made for small hands.",
+  "alt": "Color by number coloring page for kids: monster truck, level 5 with 8 colors and a color key",
+  "free": true,
+  "level": 5,
+  "colors": 8,
+  "book": "book1"
+ },
+ {
+  "slug": "arctic-animals-color-by-number",
+  "title": "Arctic Animals: Easy Animal Color by Number for Kids Ages 3-5",
+  "label": "Arctic Animals",
+  "desc": "A polar bear and friends on the ice in the snowy Arctic. A winter scene with 8 colors.",
+  "alt": "Color by number coloring page for kids: arctic animals, level 5 with 8 colors and a color key",
+  "free": false,
+  "level": 5,
+  "colors": 8,
+  "book": "book2"
+ }
+]

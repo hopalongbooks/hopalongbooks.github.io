@@ -138,5 +138,95 @@
   "free": false,
   "level": 5,
   "colors": 8
+ },
+ {
+  "slug": "ankylosaurus-holds-a-balloon-color-by-number",
+  "title": "Ankylosaurus Holds a Balloon Coloring Page: Easy Dinosaur Color by Number for Kids",
+  "label": "Ankylosaurus Holds a Balloon",
+  "desc": "An ankylosaurus holding a balloon on a string. Just 3 colors and big shapes.",
+  "alt": "Color by number coloring page for kids: ankylosaurus holds a balloon, level 1 with 3 colors and a color key",
+  "free": true,
+  "level": 1,
+  "colors": 3
+ },
+ {
+  "slug": "t-rex-waves-hello-color-by-number",
+  "title": "T-Rex Waves Hello: Easy Dinosaur Color by Number for Kids Ages 3-5",
+  "label": "T-Rex Waves Hello",
+  "desc": "A T-Rex waving hello in front of a little house. A friendly first color by number page.",
+  "alt": "Color by number coloring page for kids: t-rex waves hello, level 1 with 3 colors and a color key",
+  "free": false,
+  "level": 1,
+  "colors": 3
+ },
+ {
+  "slug": "triceratops-eats-breakfast-color-by-number",
+  "title": "Triceratops Eats Breakfast Coloring Page: Easy Dinosaur Color by Number for Kids",
+  "label": "Triceratops Eats Breakfast",
+  "desc": "A triceratops sitting down to breakfast. 4 colors and simple shapes.",
+  "alt": "Color by number coloring page for kids: triceratops eats breakfast, level 2 with 4 colors and a color key",
+  "free": true,
+  "level": 2,
+  "colors": 4
+ },
+ {
+  "slug": "ankylosaurus-reads-a-book-color-by-number",
+  "title": "Ankylosaurus Reads a Book: Easy Dinosaur Color by Number for Kids Ages 3-5",
+  "label": "Ankylosaurus Reads a Book",
+  "desc": "An ankylosaurus reading a big open book. A cozy quiet-time page.",
+  "alt": "Color by number coloring page for kids: ankylosaurus reads a book, level 2 with 4 colors and a color key",
+  "free": false,
+  "level": 2,
+  "colors": 4
+ },
+ {
+  "slug": "triceratops-is-a-doctor-color-by-number",
+  "title": "Triceratops Is a Doctor Coloring Page: Easy Dinosaur Color by Number for Kids",
+  "label": "Triceratops Is a Doctor",
+  "desc": "A triceratops doctor with a first-aid kit. 5 colors with the color name on the key.",
+  "alt": "Color by number coloring page for kids: triceratops is a doctor, level 3 with 5 colors and a color key",
+  "free": true,
+  "level": 3,
+  "colors": 5
+ },
+ {
+  "slug": "parasaurolophus-paints-a-picture-color-by-number",
+  "title": "Parasaurolophus Paints a Picture: Easy Dinosaur Color by Number for Kids Ages 3-5",
+  "label": "Parasaurolophus Paints a Picture",
+  "desc": "A parasaurolophus painting at an easel. A creative page for little artists.",
+  "alt": "Color by number coloring page for kids: parasaurolophus paints a picture, level 3 with 5 colors and a color key",
+  "free": false,
+  "level": 3,
+  "colors": 5
+ },
+ {
+  "slug": "stegosaurus-rides-a-train-color-by-number",
+  "title": "Stegosaurus Rides a Train Coloring Page: Easy Dinosaur Color by Number for Kids",
+  "label": "Stegosaurus Rides a Train",
+  "desc": "A stegosaurus riding a little train, plates and all. 6 colors, a fun level 4 page.",
+  "alt": "Color by number coloring page for kids: stegosaurus rides a train, level 4 with 6 colors and a color key",
+  "free": true,
+  "level": 4,
+  "colors": 6
+ },
+ {
+  "slug": "pteranodon-flies-an-airplane-color-by-number",
+  "title": "Pteranodon Flies an Airplane: Easy Dinosaur Color by Number for Kids Ages 3-5",
+  "label": "Pteranodon Flies an Airplane",
+  "desc": "A pteranodon pilot flying an airplane through the clouds.",
+  "alt": "Color by number coloring page for kids: pteranodon flies an airplane, level 4 with 6 colors and a color key",
+  "free": false,
+  "level": 4,
+  "colors": 6
+ },
+ {
+  "slug": "dinosaurs-build-a-sandcastle-color-by-number",
+  "title": "Dinosaurs Build a Sandcastle Coloring Page: Easy Dinosaur Color by Number for Kids",
+  "label": "Dinosaurs Build a Sandcastle",
+  "desc": "Dinosaur friends building a sandcastle at the beach. The hardest level, 8 colors.",
+  "alt": "Color by number coloring page for kids: dinosaurs build a sandcastle, level 5 with 8 colors and a color key",
+  "free": true,
+  "level": 5,
+  "colors": 8
  }
 ]
