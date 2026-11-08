@@ -415,8 +415,31 @@ def page(title, desc, body, path, jsonld=None, canonical=None, main_class="wrap"
 <header><div class="wrap"><a class="brand" href="{SITE}/"><i></i>Hop Along Books</a><nav><a href="{SITE}/#topics">Books</a><a href="{SITE}/free.html">Free pages</a><a href="{SITE}/xmas/">Christmas pages</a><a href="{SITE}/dino/">Dino pages</a><a href="{SITE}/kids/">Kids pages</a><a href="{SITE}/blog/">Guides</a><a href="{SITE}/about.html">About</a></nav></div></header>
 <main class="{main_class}">{body}</main>
 <footer><div class="wrap">&copy; 2026 Hop Along Books. Color by number books for ages 3-5. Available on Amazon. &middot; <a href="{SITE}/about.html">About</a> &middot; <a href="{SITE}/blog/">Guides for parents</a></div></footer>
-{tail}</body></html>"""
+{tail}{CF_BEACON}</body></html>"""
+    html = track_links(html)
     full = os.path.join(ROOT, path); os.makedirs(os.path.dirname(full), exist_ok=True); open(full, "w").write(html)
+
+# ---------- Cloudflare Web Analytics + click tracking (2026-11-08) ----------
+# Cloudflare Web Analytics only counts page views, so Amazon buttons and PDF downloads go through
+# tiny noindex redirect pages (/go/<ASIN>.html, /dl/<area>/<slug>.html); their page views = clicks.
+import re as _re2
+CF_BEACON = """<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "f5e63bf513ac447c9cb3165938a3747f"}'></script><!-- End Cloudflare Web Analytics -->"""
+REDIRECTS = {}
+def track_links(html):
+    def amz(m):
+        asin = m.group(1); REDIRECTS[f"go/{asin}.html"] = f"https://www.amazon.com/dp/{asin}"
+        return f'href="{SITE}/go/{asin}.html"'
+    def pdf(m):
+        area, slug = m.group(1), m.group(2); REDIRECTS[f"dl/{area}/{slug}.html"] = f"{SITE}/free/{area}/{slug}.pdf"
+        return f'href="{SITE}/dl/{area}/{slug}.html"'
+    html = _re2.sub(r'href="https://www\.amazon\.com/dp/([A-Z0-9]{10})"', amz, html)
+    html = _re2.sub(r'href="' + _re2.escape(SITE) + r'/free/(\w+)/([a-z0-9-]+)\.pdf" download', pdf, html)
+    return html
+def write_redirects():
+    for path, dest in REDIRECTS.items():
+        label = "Opening Amazon" if "amazon.com" in dest else "Opening your free PDF"
+        html = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>{label}</title><meta http-equiv="refresh" content="2;url={dest}"><style>body{{font-family:system-ui,sans-serif;background:#F6F1EA;color:#1F2A44;display:grid;place-items:center;min-height:90vh;margin:0}}a{{color:#2E46C9}}</style></head><body><p>{label}&hellip; <a href="{dest}">Tap here if nothing happens</a>.</p>{CF_BEACON}<script>setTimeout(function(){{location.replace({json.dumps(dest)})}},700)</script></body></html>"""
+        full = os.path.join(ROOT, path); os.makedirs(os.path.dirname(full), exist_ok=True); open(full, "w").write(html)
 
 def book_card(b):
     return f"""<a class="book" href="{SITE}/books/{b['slug']}.html"><img src="{SITE}/img/{b['key']}_cover.jpg" alt="{b['title']} cover" loading="lazy" width="800" height="1035">
@@ -1002,4 +1025,5 @@ page("Free Color by Number Pages for Kids Ages 3-5 (Printable PDF) | Hop Along B
 urls += [f"{SITE}/kids/"] + [f"{SITE}/kids/{x['slug']}.html" for x in KD]
 open(os.path.join(ROOT,"sitemap.xml"),"w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{u}</loc><lastmod>{TODAY}</lastmod></url>" for u in urls)+"</urlset>")
 
-print("built", len(urls), "pages")
+write_redirects()
+print("built", len(urls), "pages,", len(REDIRECTS), "tracked redirects")
