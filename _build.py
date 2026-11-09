@@ -674,9 +674,10 @@ gld = {"@context":"https://schema.org","@type":"Book","name":g["title"],"alterna
        "bookFormat":"https://schema.org/Paperback","numberOfPages":g["pages"],"inLanguage":"en","isbn":g["isbn"],"genre":"Adult coloring book, bold and easy, Christmas",
        "image":f"{SITE}/img/book4_cover.jpg","url":f"{SITE}/books/{g['slug']}.html","offers":{"@type":"Offer","url":g["amazon"],"priceCurrency":"USD","price":g["price"],"availability":"https://schema.org/InStock"}}
 gfaq = [("Is Fireside & Flurries for adults or kids?", "Both. The designs are drawn for grown-ups who want relaxing, easy coloring: thick outlines and big spaces, no tiny details. Older kids enjoy them too. There are no numbers or color key in this book."),
-        ("How many pages are there?", f"50 designs, one per page, printed on one side only, plus a color test page at the front. {g['pages']} pages, {g['size']} square paperback."),
+        ("How many pages are there?", f"50 designs, one per page, plus a color test page at the front and two Marker Shield pages at the back. There is never a scene on the back of a scene: the back of each design is a Cozy Note. {g['pages']} pages, {g['size']} square paperback."),
+        ("What is a Cozy Note?", "The back of every design has a short line about the picture, three boxes to note the colors you used, and a date line, so the finished book becomes a keepsake."),
         ("What's in it?", "5 autumn pages, 18 snowy winter pages and 27 Christmas pages: hot cocoa, fireplaces, snow globes, ice skating, gingerbread houses, Santa, stockings, ornaments and Christmas morning. Hop the bunny, Bramble the bear, Mitten the cat and Pip the fox appear throughout."),
-        ("Can I use markers?", "Yes. Pages are printed on one side, so slip a sheet of paper behind the page and markers won't reach the next design."),
+        ("Can I use markers?", "Yes. No design is printed on the back of another, and two Marker Shield pages at the back of the book cut out to slide behind the page you are coloring. Test your markers on the color test page first."),
         ("Is it a good gift?", "It's made to be a stocking stuffer: square, cozy and easy enough that anyone can finish a page in one sitting.")]
 gbody = f"""
 <div class="promise" style="margin-top:36px;grid-template-columns:1fr 1.4fr;align-items:start">
@@ -690,7 +691,9 @@ gbody = f"""
 <tr><th>Designs</th><td>50, one per page: 5 fall, 18 winter, 27 Christmas</td></tr>
 <tr><th>Lines</th><td>Thick, bold outlines and big open spaces. Easy on the eyes, easy to finish.</td></tr>
 <tr><th>The cast</th><td>Hop the bunny, Bramble the bear, Mitten the cat and Pip the fox: sipping cocoa, ice skating, wrapping gifts, baking cookies</td></tr>
-<tr><th>Printing</th><td>One design per page, printed on one side. Color test page at the front.</td></tr>
+<tr><th>Printing</th><td>One design per page, never a scene on the back of a scene. Color test page at the front.</td></tr>
+<tr><th>Cozy Notes</th><td>On the back of every design: a short line about the picture, three boxes for the colors you used and a date line.</td></tr>
+<tr><th>Marker Shield</th><td>Two cut-out pages at the back to slide behind the page you are coloring.</td></tr>
 <tr><th>Pages / size</th><td>{g['pages']} pages &middot; {g['size']} &middot; square paperback, matte cover</td></tr>
 <tr><th>Best with</th><td>Markers, colored pencils, gel pens or crayons. Put a sheet of paper behind the page when using markers.</td></tr>
 <tr><th>ISBN</th><td>{g['isbn']}</td></tr>
@@ -715,7 +718,7 @@ gbody = f"""
 <h2>For the kids</h2>
 <div class="shelf">{''.join(book_card(b) for b in BOOKS)}</div>
 """
-page(f"{g['title']} | Hop Along Books", f"{g['sub']}. Bold lines, big spaces, no tiny details. One design per page, printed one side. {g['pages']} pages, {g['size']}. ${g['price']} on Amazon.", gbody, f"books/{g['slug']}.html", jsonld=[gld, faq_ld(gfaq)])
+page(f"{g['title']} | Hop Along Books", f"{g['sub']}. Bold lines, big spaces, no tiny details. One design per page, a Cozy Note on the back. {g['pages']} pages, {g['size']}. ${g['price']} on Amazon.", gbody, f"books/{g['slug']}.html", jsonld=[gld, faq_ld(gfaq)])
 
 # ---------- blog ----------
 POSTS = [
